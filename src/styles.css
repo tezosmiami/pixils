@@ -58,8 +58,7 @@ a{
     flex-wrap:wrap;
     height:120px;
     width:120px;
-   
-    object-fit: contain;
+    object-fit: cover;
   }
   .video{
       height:120px;
@@ -82,3 +81,7 @@ a{
   
   }
 
+a{
+   max-height:120px;
+   max-width:120px;
+}
