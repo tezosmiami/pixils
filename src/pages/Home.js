@@ -89,7 +89,7 @@ export const Home = () => {
        <button  onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); mutate('/api/sales')}}>Next</button>
 
     </div>
-<p>powered by teztok</p>
+<p>indexed by teztok</p>
 
       </>
     );
