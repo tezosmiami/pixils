@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { request } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 
@@ -37,7 +37,7 @@ export const Home = () => {
   const { mutate } = useSWRConfig()
   const [pageIndex, setPageIndex] = useState(0);
   const [offset, setOffset] = useState(0)
-  const fetcher = (key,offset) => request(`https://unstable-do-not-use-in-production-api.teztok.com/v1/graphql`, getLatestSales, {offset})
+  const fetcher = (key,offset) => request(process.env.REACT_APP_TEZTOK_API, getLatestSales, {offset})
   const { data, error } = useSWR(['/api/sales', offset], fetcher, { refreshInterval: 5000 })
   
   
@@ -85,8 +85,8 @@ export const Home = () => {
       <div>
         <p></p>
       </div>
-    {pageIndex >= 1 &&<button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); mutate('/api/sales')}}>Previous</button>}/
-    <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); mutate('/api/sales')}}>Next</button>
+    {pageIndex >= 1 &&<button  onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); mutate('/api/sales')}}>Previous  &nbsp;- </button>}
+       <button  onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); mutate('/api/sales')}}>Next</button>
 
     </div>
 <p>powered by teztok</p>
