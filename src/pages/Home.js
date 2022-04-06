@@ -72,8 +72,8 @@ export const Home = () => {
   if (objktError || bidouError) return <p>Error</p>
   if (!objkts && !bidous) return <p>Loading. . .</p>
  
-  let totalpixils=objkts && bidous ? objkts?.events.concat(bidous?.events) : bidous?.events || objkts?.events || null;
-  totalpixils.length > 0 && totalpixils.sort(function (a, b) {
+  let totalpixils=objkts && bidous ? objkts?.events.concat(bidous?.events) : null;
+  totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
     return a.opid - b.opid;
   });
 
@@ -117,7 +117,8 @@ export const Home = () => {
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetBidous(offsetBidous-33); mutate('/api/sales'); mutate('/api/bidous')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99);  setOffsetBidous(offsetBidous+33); mutate('/api/sales'); mutate('/api/bidous')}}>Next</button>   
        </div>
-          <p><LightButton /></p>
+       
+          <LightButton />
        <a href={`https://www.teztok.com`} target="blank"
          rel="noopener noreferrer"> indexed by teztok</a>
        <p>experimental dApp - enjoy at your own risk. . .</p>

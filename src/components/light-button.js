@@ -24,12 +24,14 @@ export const LightButton = () => {
   }
   return(
   <div>
+        <p>
             <button
                 onClick={handleLightToggle}
                 id={'lightButton'}
                 title={'Toggle Light mode'}
                 className={'icon'}
             >■</button>
-      </div>
+        </p>
+ </div>
   )
 }
