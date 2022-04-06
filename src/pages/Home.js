@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { request } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
+import { LightButton } from '../components/light-button';
 
 const getLatestSales = `
   query getSales ($offset: Int!) {
@@ -68,7 +69,6 @@ export const Home = () => {
   const { data: objkts, error: objktError } = useSWR(['/api/sales', getLatestSales, offset], fetcher, { refreshInterval: 5000 })
   const { data: bidous, error: bidouError } = useSWR(['/api/bidou', getLatestBidous, offsetBidous], fetcher, { refreshInterval: 5000 })
   
-  
   if (objktError || bidouError) return <p>Error</p>
   if (!objkts && !bidous) return <p>Loading. . .</p>
  
@@ -79,7 +79,6 @@ export const Home = () => {
 
     return (
       <>
-  
       <div className='container'>
         {totalpixils && shuffle(totalpixils).map(p=> (
           p.token.mime_type !== null &&
@@ -100,32 +99,29 @@ export const Home = () => {
         
           // :
           p.token.eightbid_rgb !== null ?
-   
              <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
                <div className='row'>
           {sliceChunks(p.token.eightbid_rgb,6).map((c,i) => {
             return (
               <div
                  key={`${c}-${i}`}
-                 style={{backgroundColor: `#${c}`, width: '15px', height: '15px', margin: '0' }}
-              />
-           )})}
+                 style={{backgroundColor: `#${c}`, width: '15px',
+                 height: '15px', margin: '0' }}/> )})}
               </div>
               </a>
-      
-        : null
-        
-          ))}
-      <div>
-        <p></p>
-      </div>
-    {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetBidous(offsetBidous-33); mutate('/api/sales'); mutate('/api/bidous')}}>Previous  &nbsp;- </button>}
-       <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99);  setOffsetBidous(offsetBidous+33); mutate('/api/sales'); mutate('/api/bidous')}}>Next</button>
-
-    </div>
-<p>indexed by teztok</p>
-
-      </>
+             : null        
+            ))}
+       <div>
+          <p></p>
+       </div>
+          {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetBidous(offsetBidous-33); mutate('/api/sales'); mutate('/api/bidous')}}>Previous  &nbsp;- </button>}
+          <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99);  setOffsetBidous(offsetBidous+33); mutate('/api/sales'); mutate('/api/bidous')}}>Next</button>   
+       </div>
+          <p><LightButton /></p>
+       <a href={`https://www.teztok.com`} target="blank"
+         rel="noopener noreferrer"> indexed by teztok</a>
+       <p>experimental dApp - enjoy at your own risk. . .</p>
+     </>
     );
   }
   

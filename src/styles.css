@@ -1,8 +1,13 @@
+:root {
+ --background: #f2ff7a;
+ --text: #ff5858;
+}
+
 html,
 body{
    
     font-size:18px;
-    background-color: #f2ff7a;
+    background-color: var(--background);
 }
 
 div{
@@ -83,5 +88,14 @@ a{
 
 a{
    max-height:120px;
-   max-width:120px;
+ 
 }
+.lightMode {
+    --text: #f2ff7a;
+    --background: #ff5858;
+    /* background-image: linear-gradient(#d063ff,#ff69eb); */
+ }
+
+ .icon{
+     color: var(--text);
+ }

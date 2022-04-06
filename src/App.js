@@ -2,6 +2,7 @@ import React from 'react'
 import { useUserContext } from "./context/user-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
+import { LightButton } from './components/light-button';
 import "./styles.css";
 
 function App() {
@@ -17,11 +18,13 @@ function App() {
       </a>}
     
       <Link className='purple' to="/">Pixils</Link>
+      
       <button onClick={() => !app.activeAccount ? app.logIn() : app.logOut()}> 
         {!app.activeAccount ? "sync" : "unsync"}
       </button>
 
-    </header>      
+    </header>     
+    
      <div>
      <Routes>
         <Route path="/" element={<Home />} />
