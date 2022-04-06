@@ -31,7 +31,10 @@ function App() {
 
       </Routes>
     </div>
-    
+    <LightButton />
+       <a href={`https://www.teztok.com`} target="blank"
+         rel="noopener noreferrer"> indexed by teztok</a>
+       <p>experimental dApp - enjoy at your own risk. . .</p>
     </>
     )
 }
