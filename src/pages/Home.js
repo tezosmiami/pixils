@@ -7,7 +7,7 @@ export const Home = () => {
   const [toggled, setToggled ] = useState(false);
     return (
       <>
-      <a>{!toggled ? 'Sales' : 'Mints'}</a>
+      <a style={{marginLeft:'21px'}}>{!toggled ? 'Sales' : 'Mints'}</a>
       <ToggleSwitch
         isToggled={toggled}
         handleToggle={() => setToggled(!toggled)}/>
