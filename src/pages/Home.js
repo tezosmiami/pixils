@@ -5,7 +5,7 @@ import { LightButton } from '../components/light-button';
 
 const getLatestSales = `
   query getSales ($offset: Int!) {
-    events(where: {implements: {_eq: "SALE"}, token: {tags: {tag: {_ilike: "%pixel%"}}}}, order_by: {opid: desc}, limit: 99, offset: $offset) {
+    events(where: {implements: {_eq: "SALE"}, token: {tags: {tag: {_ilike: "%pixel%"}, token: {metadata_status: {_eq: "processed"}}}}}, order_by: {opid: desc}, limit: 99, offset: $offset) {
       type
       timestamp
       opid
@@ -25,7 +25,7 @@ const getLatestSales = `
 `
 const getLatestBidous = `
 query getBidous ($offset: Int!) {
-  events(where: {implements: {_eq: "SALE"}, type: {_eq: "8BID_8X8_COLOR_BUY"}}, order_by: {opid: desc}, limit: 33, offset: $offset) {
+  events(where: {implements: {_eq: "SALE"}, type: {_eq: "8BID_8X8_COLOR_BUY"}, token: {metadata_status: {_eq: "processed"}}}, order_by: {opid: desc}, limit: 33, offset: $offset) {
     type
     timestamp
     opid
