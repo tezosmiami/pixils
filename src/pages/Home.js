@@ -72,7 +72,7 @@ export const Home = () => {
   if (objktError || bidouError) return <p>Error</p>
   if (!objkts && !bidous) return <p>Loading. . .</p>
  
-  let totalpixils=objkts && bidous ? objkts?.events.concat(bidous.events) : bidous.events || objkts.events;
+  let totalpixils=objkts && bidous ? objkts?.events.concat(bidous?.events) : bidous?.events || objkts?.events || null;
   totalpixils.length > 0 && totalpixils.sort(function (a, b) {
     return a.opid - b.opid;
   });
@@ -84,7 +84,7 @@ export const Home = () => {
         {totalpixils && shuffle(totalpixils).map(p=> (
           p.token.mime_type !== null &&
           p.token.eightbid_rgb === null &&
-          p.token.mime_type.includes('image') && p.token.mime_type !='image/svg+xml' ? 
+          p.token.mime_type.includes('image') && p.token.mime_type !== 'image/svg+xml' ? 
            <a key={p.opid} href={p.token.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token.token_id}` : 
               p.type === 'VERSUM_COLLECT_SWAP' ? `https://versum.xyz/token/versum/${p.token.token_id}` :
               p.type === 'OBJKT_FULFILL_ASK_V2' ? `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`:
