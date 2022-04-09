@@ -95,7 +95,8 @@ export const LatestSales = () => {
         
           // :
           p.token.eightbid_rgb !== null ?
-             <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
+            //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
+            <a key={p.opid} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
                <div className='row'>
           {sliceChunks(p.token.eightbid_rgb,6).map((c,i) => {
             return (
