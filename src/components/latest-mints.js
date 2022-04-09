@@ -103,7 +103,8 @@ export const LatestMints = () => {
         
           // :
           p.token.eightbid_rgb ?
-             <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token_id}`} target="blank"  rel="noopener noreferrer">
+            //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token_id}`} target="blank"  rel="noopener noreferrer" /> 
+            <a key={p.opid} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
                <div className='row'>
           {sliceChunks(p.token.eightbid_rgb,6).map((c,i) => {
             return (
