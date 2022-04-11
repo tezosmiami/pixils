@@ -48,7 +48,7 @@ a{
     cursor: pointer;
 }
 .purple{
-    color: purple;
+    color: var(--text);
     font-size: 7vw;
     font-family: "Faster One"
 }
