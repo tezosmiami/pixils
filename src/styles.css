@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Faster+One&family=Gugi&family=Monofett&family=Oxygen+Mono&display=swap');
 :root {
- --background: #ff0066;
- --text: black;
- background-color: linear-gradient(to bottom right, #ff0066, #2d27ff);
+ --background: black;
+ --text: white;
+ /* background-color: linear-gradient(to bottom right, #ff0066, #2d27ff); */
  height: 100%;
 
 }
@@ -10,8 +10,11 @@
 html,
 body{
     font-size:18px;
-    background: linear-gradient(to bottom right, #ff0066, white, #2d27ff);
-    background-color: linear-gradient(to bottom right, #ff0066, white, #2d27ff);
+    /* background: linear-gradient(to bottom right, #ff0066, white, #2d27ff); */
+    /* background-color: linear-gradient(to bottom right, #ff0066, white, #2d27ff);
+     */
+
+     background-color: var(--background);
 }
 
 div{
@@ -67,7 +70,7 @@ a{
     width:270px;
     object-fit: cover;
     margin:5px;
-    border: 3px solid black;
+    border: 3px solid var(--text);
     padding: 6px;
   }
   .video{
@@ -94,8 +97,8 @@ a{
 /* s */
 .lightMode {
     --text: black;
-    --background: #2d27ff;
-    background: linear-gradient(to bottom right, #2d27ff,white,  #ff0066);
+    --background: white;
+    /* background: linear-gradient(to bottom right, #2d27ff,white,  #ff0066); */
     /* background-image: linear-gradient(#d063ff,#ff69eb); */
  }
 
