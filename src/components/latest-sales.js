@@ -5,7 +5,7 @@ import useSWR, { useSWRConfig } from 'swr';
 
 export const getLatestSales = gql`
   query getSales ($offset: Int!) {
-    tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offset,limit: 108) {
+    tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offset, limit: 108) {
       mime_type
       artifact_uri
       fa2_address
@@ -34,10 +34,10 @@ export function sliceChunks(arr, chunkSize) {
 export const LatestSales = () => {
   const { mutate } = useSWRConfig()
   const [pageIndex, setPageIndex] = useState(0);
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState(Math.floor(Math.random() * 49892))
   const fetcher = (key, query, offset) => request(process.env.REACT_APP_TEZTOK_API, query, {offset})
   const { data, error} = useSWR(['/api/sales', getLatestSales, offset], fetcher, { refreshInterval: 5000 })
-console.log(data)
+console.log(data?.tokens.length)
   if (error) return <p>Error</p>
   if (!data) return <p>Loading. . .</p>
  
@@ -58,7 +58,7 @@ console.log(data)
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.token_id}  src={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
           </a>
            :
           // p.token.mime_type !== null &&
