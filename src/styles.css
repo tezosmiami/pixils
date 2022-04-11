@@ -2,7 +2,7 @@
 :root {
  --background: #ff0066;
  --text: black;
- background-color: linear-gradient(to bottom right, #ff0066, #2d27ff);
+ background: linear-gradient(to bottom right, #ff0066, #2d27ff);
     height: 100%;
 }
 
