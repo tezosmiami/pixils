@@ -58,7 +58,7 @@ console.log(data?.tokens.length)
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://cloudflare-ipfs.com/ipfs/' + p.artifact_uri.slice(7)}/> 
           </a>
            :
           // p.token.mime_type !== null &&
