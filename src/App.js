@@ -16,7 +16,7 @@ function App() {
       target="blank" rel="noopener noreferrer"> 
         {app.name || app.address.substr(0, 5) + "..." + app.address.substr(-5)}
       </a>}
-      <Link className='purple' to="/">Pixils</Link>
+      <Link className='purple' to="/">Singulare</Link>
       
       <button onClick={() => !app.activeAccount ? app.logIn() : app.logOut()}> 
         {!app.activeAccount ? "sync" : "unsync"}

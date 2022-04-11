@@ -1,13 +1,13 @@
 :root {
- --background: #f2ff7a;
- --text: #ff5858;
+ --background: #ff0066;
+ --text: black;
 }
 
 html,
 body{
    
     font-size:18px;
-    background-color: var(--background);
+    background: linear-gradient(to bottom right, #ff0066, #2d27ff);;
 }
 
 div{
@@ -30,7 +30,7 @@ header{
 
 
 button {
-    color: orange;
+    /* color: orange; */
     background-color:transparent;
     border:none;
     font-size:18px;
@@ -59,13 +59,16 @@ a{
   .pop{
     flex-direction: row;
     flex-wrap:wrap;
-    height:120px;
-    width:120px;
+    height:360px;
+    width:270px;
     object-fit: cover;
+    margin:5px;
+    border: 3px solid black;
+    padding: 6px;
   }
   .video{
-      height:120px;
-      width:120px;
+      height:360px;
+      width:270px;
   }
   .canvas {
     display: flex; 
@@ -78,19 +81,17 @@ a{
     display: flex; 
     flex-direction: row;
     flex-Wrap: wrap;
-    max-width: 120px;
-    max-height:120px;
+    max-width: 270px;
+    max-height:360px;
     /* margin-top: 33px; */
   
   }
 
-a{
-   max-height:120px;
- 
-}
+/* s */
 .lightMode {
-    --text: #f2ff7a;
-    --background: #ff5858;
+    --text: black;
+    --background: #2d27ff;
+    background: linear-gradient(to bottom right, #2d27ff, #ff0066);
     /* background-image: linear-gradient(#d063ff,#ff69eb); */
  }
 
