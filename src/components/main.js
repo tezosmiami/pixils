@@ -84,7 +84,7 @@ export const Main = () => {
   if (!data) return <p>Loading. . .</p>
 
   const merge = data?.random.concat(data.recent)
-  const final = shuffle(merge?.filter((i) => !banned.includes(i.artist_address)))
+  const final = merge?.filter((i) => !banned.includes(i.artist_address))
 
 //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
