@@ -93,7 +93,7 @@ export const Main = () => {
     return (
       <>
       <p>Recent Objkts:</p>
-      <div className='container'>
+      <div className='container' style={{ borderBottom: `6px dotted var(--text)`}}>
         {data && data.recent.map(p=> (
           // p.mime_type !== null &&
           // p.eightbid_rgb === null &&
@@ -131,7 +131,7 @@ export const Main = () => {
           //    :
            : null        
             ))}
-       <div>
+       <div style= {{borderBottom: '6px dotted'}}>
           <p></p>
        </div>
        </div>
