@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Faster+One&family=Gugi&family=Monofett&family=Oxygen+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Faster+One&family=Gugi&family=Monofett&family=Oxygen+Mono&display=swap');
+
+@font-face {
+    font-family: 'Advantage';
+    font-display: swap;
+    font-weight: normal;
+    font-style: normal;
+    src: url('fonts/advantage.italic.ttf') format('truetype');
+  }
 :root {
  --background: black;
  --text: white;
@@ -52,12 +60,12 @@ a{
 .purple{
     color: var(--text);
     font-size: 7vw;
-    font-family: "Faster One"
+    font-family: "Advantage"
 }
 
 .container{
 
-    width: 96vw;
+    width: 98vw;
     flex-direction: row;
     flex-wrap:wrap;
     justify-content: center;

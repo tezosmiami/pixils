@@ -3,7 +3,7 @@ import { useUserContext } from "./context/user-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
 import { LightButton } from './components/light-button';
-import "./styles.css";
+import "./styles/styles.css";
 
 function App() {
 
