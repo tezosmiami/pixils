@@ -80,8 +80,8 @@ export const Main = () => {
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
-  if (error) return <p>Error</p>
-  if (!data) return <p>Loading. . .</p>
+  if (error) return <p>error</p>
+  if (!data) return <p>loading. . .</p>
 
   // const merge = data?.recent.concat(data.random)
   const final = data?.random.filter((i) => !banned.includes(i.artist_address))
@@ -92,7 +92,7 @@ export const Main = () => {
 
     return (
       <>
-      <p>Recent Objkts:</p>
+      <p>recent objkts:</p>
       <div className='container' style={{ borderBottom: `6px dotted var(--text)`}}>
         {data && data.recent.map(p=> (
           // p.mime_type !== null &&
@@ -135,7 +135,7 @@ export const Main = () => {
           <p></p>
        </div>
        </div>
-       <p>Random Objkts:</p>
+       <p>random objkts:</p>
       <div className='container'>
         {final && final.map(p=> (
           // p.mime_type !== null &&
