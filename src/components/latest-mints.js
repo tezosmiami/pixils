@@ -48,6 +48,8 @@ export const getLatestMints = gql`
     } 
    `
 
+   const fetcher = (key, query, offset, offsetBidou) => request(process.env.REACT_APP_TEZTOK_API, query, {offset})
+
 export function sliceChunks(arr, chunkSize) {
   const res = [];
   for (let i = 0; i < arr.length; i += chunkSize) {
@@ -67,9 +69,8 @@ export function sliceChunks(arr, chunkSize) {
 
 export const LatestMints = () => {
   const { mutate } = useSWRConfig()
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0)
   const [offset, setOffset] = useState(0)
-  const fetcher = (key, query, offset) => request(process.env.REACT_APP_TEZTOK_API, query, {offset})
   const { data: mints, error: error } = useSWR(['/api/mints', getLatestMints, offset], fetcher, { refreshInterval: 5000 })
 
 
