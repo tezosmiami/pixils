@@ -71,9 +71,9 @@ a{
     height:360px;
     width:270px;
     object-fit: cover;
-    margin:5px;
+    margin:6px;
     border: 6px solid var(--text);
-    border-radius: 2%;
+    border-radius: 3%;
     padding: 6px;
   }
   .video{
