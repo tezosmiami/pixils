@@ -72,7 +72,7 @@ a{
     width:270px;
     object-fit: cover;
     margin:5px;
-    border: 8px solid var(--text);
+    border: 2px solid var(--text);
     padding: 6px;
   }
   .video{
