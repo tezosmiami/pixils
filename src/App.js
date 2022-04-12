@@ -17,16 +17,17 @@ function App() {
       {/* {app.address && <a href={`https://hicetnunc.miami/tz/${app.address}`}
       target="blank" rel="noopener noreferrer"> 
        */}
-        {app.name || app.address.substr(0, 5) + "..." + app.address.substr(-5)}
+        {app.name + ' / '|| app.address.substr(0, 4) + "..." + app.address.substr(-4)+' / '}
       {/* </a>} */}
       </Link>}
-      <Link className='purple' to="/">S1NGULARE</Link>
-      
+    
+  
       <button onClick={() => !app.activeAccount ? app.logIn() : app.logOut()}> 
         {!app.activeAccount ? "sync" : "unsync"}
       </button>
 
     </header>     
+    <Link className='purple' to="/">S1NGULARE</Link>
     <LightButton />
      <div>
      <Routes>
