@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { LatestSales } from '../components/latest-sales';
+import { Main } from '../components/main';
 import { LatestMints } from '../components/latest-mints';
 import ToggleSwitch from '../components/toggle';
 
@@ -12,7 +12,7 @@ export const Home = () => {
         isToggled={toggled}
         handleToggle={() => setToggled(!toggled)}/>
        {!toggled ? <LatestSales /> : <LatestMints/>} */}
-       <LatestSales />
+       <Main />
       </>
     );
   }
