@@ -72,12 +72,14 @@ a{
     width:270px;
     object-fit: cover;
     margin:5px;
-    border: 2px solid var(--text);
+    border: 6px solid var(--text);
+    border-radius: 2%;
     padding: 6px;
   }
   .video{
       height:360px;
       width:270px;
+      overflow:hidden;
   }
   .canvas {
     display: flex; 
