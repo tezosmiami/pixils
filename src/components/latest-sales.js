@@ -85,7 +85,7 @@ export const LatestSales = () => {
               p.type === 'OBJKT_FULFILL_ASK_V2' ? `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`:
               p.type === 'FX_COLLECT' ? `https://fxhash.xyz/gentk/${p.token.token_id}`
              : '/#'} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.opid}  src={'https://ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.opid}  src={'https://gateway.ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
           </a>
            :
           // p.token.mime_type !== null &&
