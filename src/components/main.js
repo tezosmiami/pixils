@@ -93,7 +93,7 @@ export const Main = () => {
     return (
       <>
       <p>recent objkts:</p>
-      <div className='container' style={{ borderBottom: `6px dotted var(--text)`}}>
+      <div className='container'>
         {data && data.recent.map(p=> (
           // p.mime_type !== null &&
           // p.eightbid_rgb === null &&
@@ -131,9 +131,13 @@ export const Main = () => {
           //    :
            : null        
             ))}
-       <div style= {{borderBottom: '6px dotted'}}>
+
+    
+        <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
+        <div style= {{borderBottom: '6px dotted', width: '80%'}} />
+       {/* <div>
           <p></p>
-       </div>
+       </div> */}
        </div>
        <p>random objkts:</p>
       <div className='container'>
