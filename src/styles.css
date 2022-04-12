@@ -105,5 +105,6 @@ a{
  }
 
  .icon{
+     font-size: 27px;
      color: var(--text);
  }
