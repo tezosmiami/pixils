@@ -1,23 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Faster+One&family=Gugi&family=Monofett&family=Oxygen+Mono&display=swap');
 
 @font-face {
-    font-family: 'Advantage';
+    font-family: 'Halo';
     font-display: swap;
     font-weight: normal;
     font-style: normal;
     src: url('fonts/halo.regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Advantage';
+    font-display: swap;
+    font-weight: normal;
+    font-style: normal;
+    src: url('fonts/advantage.regular.ttf') format('truetype');
   }
 :root {
  --background: black;
  --text: white;
  /* background-color: linear-gradient(to bottom right, #ff0066, #2d27ff); */
  height: 100%;
-color:var(--text);
+ font-family: 'Advantage';
+ color:var(--text);
 
 }
 
 html,
 body{
+  font-family: 'Advantage';
     font-size:18px;
     /* background: linear-gradient(to bottom right, #ff0066, white, #2d27ff); */
     /* background-color: linear-gradient(to bottom right, #ff0066, white, #2d27ff);
@@ -46,6 +56,7 @@ header{
 
 button {
     /* color: orange; */
+    font-family: 'Advantage';
     color:var(--text);
     background-color:transparent;
     border:none;
@@ -59,12 +70,12 @@ a{
 }
 .purple{
     color: var(--text);
-    font-size: 7vw;
-    font-family: "Advantage"
+    font-size: 6vw;
+    font-family: "Halo"
 }
 
 .container{
-
+    border-bottom: 6px solid var(--text);
     width: 98vw;
     flex-direction: row;
     flex-wrap:wrap;

@@ -23,7 +23,7 @@ function App() {
       </button>
 
     </header>     
-    
+    <LightButton />
      <div>
      <Routes>
         <Route path="/" element={<Home />} />

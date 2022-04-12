@@ -83,8 +83,8 @@ export const Main = () => {
   if (error) return <p>Error</p>
   if (!data) return <p>Loading. . .</p>
 
-  const merge = data?.random.concat(data.recent)
-  const final = merge?.filter((i) => !banned.includes(i.artist_address))
+  // const merge = data?.recent.concat(data.random)
+  const final = data?.random.filter((i) => !banned.includes(i.artist_address))
 
 //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
@@ -92,8 +92,9 @@ export const Main = () => {
 
     return (
       <>
+      <p>Recent Objkts:</p>
       <div className='container'>
-        {final && final.slice(0,108).map(p=> (
+        {data && data.recent.map(p=> (
           // p.mime_type !== null &&
           // p.eightbid_rgb === null &&
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
@@ -133,6 +134,51 @@ export const Main = () => {
        <div>
           <p></p>
        </div>
+       </div>
+       <p>Random Objkts:</p>
+      <div className='container'>
+        {final && final.map(p=> (
+          // p.mime_type !== null &&
+          // p.eightbid_rgb === null &&
+          p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
+           <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+              p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
+
+             : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          </a>
+           :
+          // p.token.mime_type !== null &&
+          p.mime_type.includes('video') ?  
+          <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+          p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
+
+         : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
+           <div className='pop video'>
+             <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+            </div>
+            </a>
+          // :
+          // p.eightbid_rgb !== null ?
+          //   //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
+          //   <a key={p.token_id} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
+          //      <div className='row'>
+          // {sliceChunks(p.eightbid_rgb,6).map((c,i) => {
+          //   return (
+          //     <div
+          //        key={`${c}-${i}`}
+          //        style={{backgroundColor: `#${c}`, width: '15px',
+          //        height: '15px', margin: '0' }}/> )})}
+          //     </div>
+          //     </a>
+          //    :
+           : null        
+            ))}
+       <div>
+          <p></p>
+       </div>
+       </div>
+       <div>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   
        </div>
