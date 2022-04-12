@@ -39,6 +39,9 @@ export const getLatestSales = gql`
    }  
  ` 
 
+const fetcher = (key, query, offset, offsetBidou) => 
+    request(process.env.REACT_APP_TEZTOK_API, query, {offset, offsetBidou})
+
 export function sliceChunks(arr, chunkSize) {
   const res = [];
   for (let i = 0; i < arr.length; i += chunkSize) {
@@ -61,7 +64,7 @@ export const LatestSales = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [offset, setOffset] = useState(0)
   const [offsetBidou, setOffsetBidou] = useState(0)
-  const fetcher = (key, query, offset) => request(process.env.REACT_APP_TEZTOK_API, query, {offset, offsetBidou})
+ 
   const { data: sales, error: error} = useSWR(['/api/sales', getLatestSales, offset, offsetBidou], fetcher, { refreshInterval: 5000 })
 
   if (error) return <p>Error</p>
