@@ -72,7 +72,7 @@ a{
 .purple{
     color: var(--text);
     font-size: 38px;
-    font-family: 'Advantage'
+    font-family: 'Halo'
 }
 
 @media screen and (min-width: 550px) {
@@ -135,4 +135,9 @@ a{
      font-size: 27px;
      color: var(--text);
     
+ }
+
+ .reverse{
+   color: var(--background);
+   background-color: var(--text);
  }
