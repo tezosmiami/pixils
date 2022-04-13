@@ -45,7 +45,6 @@ export const Created = ({ address, banned }) => {
 
   const { account } = useParams();
 
-
 //   useEffect(() => {
 //     const getTotal = async () => {
 //       const result = await request(process.env.REACT_APP_TEZTOK_API, getCount)
@@ -59,7 +58,7 @@ export const Created = ({ address, banned }) => {
   // const { data: total, error: totalerror} = useSWR([`/api/total`, getTotalObjkts, null], fetcher,{ refreshInterval: 5000 })
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
 
-
+  
   const { data, error } = useSWR(address && ['/api/created', getObjkts, address], fetcher)
 
   if (error) return <p>Error</p>

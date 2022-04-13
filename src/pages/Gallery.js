@@ -18,12 +18,11 @@ query Subjkt($address: String!) {
 const fetcher = (key, query, address) => request(process.env.REACT_APP_TEZTOK_API, query, {address})
 
 export const Gallery = () => {
+  
   const [toggled, setToggled ] = useState(false);
   const [banned, setBanned] = useState()
   const { account } = useParams();
   const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
-  const address = account.length !== 36 ? subjkt?.tzprofiles[0].account : account;
-
   useEffect(() => {
     const getBanned = async () => {
     const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
@@ -31,7 +30,11 @@ export const Gallery = () => {
   }
     getBanned();
   }, [])
+  
+  if (!subjkt?.tzprofiles[0]) return <p></p>
+  const address = subjkt?.tzprofiles[0].account|| account;
 
+  
     return (
       <>
       <a style={{marginLeft:'21px'}}>{!toggled ? 'Created' : 'Collected'}</a> 
