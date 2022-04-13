@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useUserContext } from "./context/user-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
@@ -6,9 +6,16 @@ import { Gallery } from './pages/Gallery'
 import { LightButton } from './components/light-button';
 import "./styles/styles.css";
 
+const fonts = ['Halo', 'Advantage', 'Faster One']
 function App() {
 
   const  app = useUserContext();
+
+
+useEffect(() => {
+    var r = document.querySelector(':root')
+    r.style.setProperty('--font', fonts[Math.floor(Math.random()* fonts.length)])
+  }, [])
 
   return(
     <>

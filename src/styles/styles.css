@@ -20,7 +20,7 @@
  --text: white;
  /* background-color: linear-gradient(to bottom right, #ff0066, #2d27ff); */
  height: 100%;
-
+  --font: 'Halo';
  color:var(--text);
 
 }
@@ -72,8 +72,8 @@ a{
 .purple{
     color: var(--text);
     font-size: 38px;
-    font-family: 'Halo'
-}
+    font-family: var(--font);
+  }
 
 @media screen and (min-width: 550px) {
   .purple{
