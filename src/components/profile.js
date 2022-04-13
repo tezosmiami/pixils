@@ -91,7 +91,7 @@ export const Profile = () => {
 
     return (
       <>
-      <p>{address}</p>
+      <p>{address?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : address}</p>
       <div className='container'>
         {final && final.map(p=> (
           // p.mime_type !== null &&
