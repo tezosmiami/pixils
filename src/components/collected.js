@@ -8,7 +8,7 @@ import {sliceChunks} from './latest-sales';
 
 export const getObjkts = gql`
 query wallet($address: String) {
- collected: holdings(where: {_and: [{holder_address: {_eq: $address}}, {token: {_and: [{minter_address: {_neq: $address}}, {_or: [{tags: {tag: {_ilike: "%pixel%"}}}, {fa2_address: {_eq: "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp"}}]}]}}]}, order_by: {token: {minted_at: desc}}) {
+ collected: holdings(where: {_and: [{holder_address: {_eq: $address}}, {token: {_and: [{minter_address: {_neq: $address}}, {editions: {_gte: "1"}}, {_or: [{tags: {tag: {_ilike: "%pixel%"}}}, {fa2_address: {_eq: "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp"}}]}]}}]}, order_by: {token: {minted_at: desc}}) {
     token {
       artifact_uri
       fa2_address
@@ -67,7 +67,7 @@ export const Collected = ({ address, banned }) => {
   // const { data: total, error: totalerror} = useSWR([`/api/total`, getTotalObjkts, null], fetcher,{ refreshInterval: 5000 })
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
   
-  const { data, error } = useSWR(address && ['/api/collected', getObjkts, address], fetcher, { refreshInterval: 15000 })
+  const { data, error } = useSWR(address && ['/api/collected', getObjkts, address], fetcher)
 
   if (error) return <p>Error</p>
   if (!data) return <p>Loading. . .</p>
@@ -88,8 +88,8 @@ export const Collected = ({ address, banned }) => {
       <p>{account?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : account}</p>
       <div className='container'>
         {collected && collected.map(p=> (
-          p.mime_type !== null &&
-          p.eightbid_rgb === null &&
+          p.token.mime_type !== null &&
+          p.token.eightbid_rgb === null &&
           p.token.mime_type.includes('image') && p.token.mime_type !== 'image/svg+xml' ? 
            <a key={p.token.artifact_uri} href={p.token.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token.token_id}` : 
               p.token.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token.token_id}` 
