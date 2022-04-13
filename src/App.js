@@ -28,6 +28,7 @@ function App() {
 
     </header>     
     <Link className='purple' to="/">S1NGULARE</Link>
+     <p>1/1 TEZOS OBJKTS</p>
     <LightButton />
      <div>
      <Routes>

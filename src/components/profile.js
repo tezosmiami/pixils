@@ -16,7 +16,7 @@ query walletName($address: String) {
       }
     }
    
-    pk: holdings(where: {token: {artifact_uri: {_is_null: false}, mime_type: {_is_null: false}, editions: {_eq: "1"}, holdings: {amount: {_eq: "1"}}}, holder_profile: {account: {_eq: $address}}, amount: {_eq: "1"}}, order_by: {token: {minted_at: desc}}) {
+    pk: holdings(where: {token: {artifact_uri: {_is_null: false}, mime_type: {_is_null: false}, editions: {_eq: "1"}, holdings: {amount: {_eq: "1"}}}, holder_profile: {account: {_ilike: $address}}, amount: {_eq: "1"}}, order_by: {token: {minted_at: desc}}) {
         token {
           artifact_uri
           artist_address
