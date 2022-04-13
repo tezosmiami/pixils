@@ -83,13 +83,14 @@ export const Profile = () => {
   // const { data: total, error: totalerror} = useSWR([`/api/total`, getTotalObjkts, null], fetcher,{ refreshInterval: 5000 })
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
   const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
-  const address = subjkt?.tzprofiles[0].account;
-  const { data, error } = useSWR(address && ['/api/profile', getObjkts, address], fetcher, { refreshInterval: 15000 })
 
-console.log(error)
+  const address = subjkt?.tzprofiles[0]?.account;
+  const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
+  
+  if (!address) return <p>nada. . .</p>
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
-
+  
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;
 
