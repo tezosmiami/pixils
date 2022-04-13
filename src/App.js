@@ -14,7 +14,7 @@ function App() {
     <>
     <header>
     {app.address && <Link to={`/${app.name || app.address}`}>
-        {app.name || app.address.substr(0, 5) + "..." + app.address.substr(-5)}
+        {app.name || app.address.substr(0, 4) + "..." + app.address.substr(-4)}
       </Link>}
       <Link className='purple' to="/">Pixils</Link>
       

@@ -31,7 +31,7 @@ export const Gallery = () => {
     getBanned();
   }, [])
   
-  if (!subjkt?.tzprofiles[0]) return <p></p>
+  if (!subjkt?.tzprofiles[0]) return <p>nada. . .</p>
   const address = subjkt?.tzprofiles[0].account|| account;
 
   
