@@ -84,10 +84,10 @@ export const Profile = () => {
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
   const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
 
-  const address = account.length === 36 ? account : subjkt?.tzprofiles[0].account
+  const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null;
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
-  if (subjkt && !address) return <p>nada. . .</p>
+  if (subjkt && !address ) return <p>nada. . .</p>
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
   
