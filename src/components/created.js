@@ -75,7 +75,7 @@ export const Created = ({ address, banned }) => {
 //   });
     return (
       <>
-      <p>{account.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : address && account}</p>
+      <p style={{fontSize:'25px', marginLeft: '21px'}}>{account.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) :  account}</p>
       <div className='container'>
         {created && created.map(p=> (
           p.mime_type !== null &&
