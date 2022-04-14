@@ -32,7 +32,8 @@ export const Gallery = () => {
   }, [])
   
   if (subjkt && !subjkt?.tzprofiles[0]) return <p>nada. . .</p>
-  const address = subjkt?.tzprofiles[0].account;
+  const address = account.length === 36 ? account : subjkt?.tzprofiles[0].account
+
 
   
     return (
