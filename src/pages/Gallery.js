@@ -9,12 +9,12 @@ const axios = require('axios');
 
 export const getSubjkt = gql`
 query Subjkt($address: String!) {
-    tzprofiles(where: {alias: {_ilike: $address}}) {
+  tzprofiles(where: {alias: {_ilike: $address}}) {
       account
     }
-  }
-  
+  }  
 `
+
 const fetcher = (key, query, address) => request(process.env.REACT_APP_TEZTOK_API, query, {address})
 
 export const Gallery = () => {
