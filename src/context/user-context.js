@@ -26,7 +26,7 @@ async function fetchGraphQL(queryObjkts, name, variables) {
 
 const UserContext = createContext();
 const options = {
-  name: 'Tezos Miami'
+  name: 'Pixils'
  };
   
 const wallet = new BeaconWallet(options);
