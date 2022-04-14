@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 export const getSubjkt = gql`
 query Subjkt($address: String!) {
-    tzprofiles(where: {alias: {_ilike: $address}}) {
+  tzprofiles(where: {alias: {_ilike: $address}}) {
       account
     }
   }
@@ -84,7 +84,7 @@ export const Profile = () => {
   // setOffset(total?.tokens_aggregate.aggregate.count-108)
   const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
 
-  const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null;
+  const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
   if (subjkt && !address ) return <p>nada. . .</p>
