@@ -87,7 +87,7 @@ export const Profile = () => {
   const address = subjkt?.tzprofiles[0]?.account;
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
-  if (!address) return <p>nada. . .</p>
+  if (subjkt && !address) return <p>nada. . .</p>
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
   
@@ -96,7 +96,7 @@ export const Profile = () => {
 
   const filteredcreated = data.created.filter((i) => !banned.includes(i.artist_address))
   const filteredcollected = data.collected.filter((i) => !banned.includes(i.artist_address))
-  console.log(filteredcollected)
+
   //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
 //   });
@@ -165,7 +165,7 @@ export const Profile = () => {
           </a>
            :
           // p.token.mime_type !== null &&
-          p.token.mime_type.includes('video') ?  
+          p.mime_type.includes('video') ?  
           <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
           p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
