@@ -48,8 +48,6 @@ export const getLatestMints = gql`
     } 
    `
 
-   const fetcher = (key, query, offset, offsetBidou) => request(process.env.REACT_APP_TEZTOK_API, query, {offset})
-
 export function sliceChunks(arr, chunkSize) {
   const res = [];
   for (let i = 0; i < arr.length; i += chunkSize) {
@@ -69,8 +67,9 @@ export function sliceChunks(arr, chunkSize) {
 
 export const LatestMints = () => {
   const { mutate } = useSWRConfig()
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(0);
   const [offset, setOffset] = useState(0)
+  const fetcher = (key, query, offset) => request(process.env.REACT_APP_TEZTOK_API, query, {offset})
   const { data: mints, error: error } = useSWR(['/api/mints', getLatestMints, offset], fetcher, { refreshInterval: 5000 })
 
 
@@ -94,7 +93,7 @@ export const LatestMints = () => {
               p.type === 'OBJKT_MINT_ARTIST' ? `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`:
               p.type === 'FX_MINT' ? `https://fxhash.xyz/gentk/${p.token_id}`
              : '/#'} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.opid}  src={'https://gateway.ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.opid}  src={'https://ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
           </a>
            :
           // p.token.mime_type !== null &&
@@ -104,8 +103,7 @@ export const LatestMints = () => {
         
           // :
           p.token.eightbid_rgb ?
-            //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token_id}`} target="blank"  rel="noopener noreferrer"> 
-            <a key={p.opid} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
+             <a key={p.opid} href={`https://ui.8bidou.com/item/?id=${p.token_id}`} target="blank"  rel="noopener noreferrer" > 
                <div className='row'>
           {sliceChunks(p.token.eightbid_rgb,6).map((c,i) => {
             return (
