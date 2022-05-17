@@ -9,8 +9,8 @@ export const Search = ({returnSearch, search}) => {
     const navigate = useNavigate();
     const [tag, setTag] = useState(search?.toLowerCase())
     const [input, setInput] = useState()
-    const [loading, setLoading] = useState()
-    const [objkts, setObjkts] = useState()
+    const [loading, setLoading] = useState(false)
+    const [objkts, setObjkts] = useState([])
     const getByTag = gql`
     query tags {
         tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_ilike: ${tag}}}}],
@@ -49,8 +49,9 @@ export const Search = ({returnSearch, search}) => {
         }
         getObjkts();
     }, [tag])
-console.log (objkts)
-    if (!objkts ) return <p>loading. . .</p>
+
+    // if (search && !loading) return (<div>empty return. . .</div>)
+    // if (loading) return 'loading. . .'
     return(
   <>
     <div className='container'>
@@ -67,8 +68,9 @@ console.log (objkts)
       />
         <p />
     </div>
+    {loading && 'loading. . .'}
     {search && objkts.length > 0 ? <div> search: {tag}<p /> </div> :
-     !loading ? 'empty return. . .' : null} 
+     !loading && search ? <div> 'empty return. . .'<p /> </div>: null} 
         {search && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
@@ -87,7 +89,7 @@ console.log (objkts)
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
             </div>
             </a>
-           : !objkts ? 'loading. . .' : ''
+           : ''
             ))}
        </div>
        

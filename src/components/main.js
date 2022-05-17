@@ -57,7 +57,7 @@ export const Main = () => {
   const [offsetNew, setOffsetNew] = useState(0)
   const [banned, setBanned] = useState()
   const [tag,setTag] = useState()
-  const [objkts, setObjkts] = useState([])
+  const [objkts, setObjkts] = useState()
   const axios = require('axios');
 
   useEffect(() => {
@@ -142,7 +142,7 @@ export const Main = () => {
        <div>
           <p></p>
        </div>
-       </div>}
+       </div>
        <div>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   
