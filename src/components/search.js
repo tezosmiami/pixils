@@ -42,8 +42,6 @@ export const Search = ({returnSearch, query, banned}) => {
         returnSearch([]) 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
-        !filtered && console.log('hell')
-        console.log(filtered)
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
