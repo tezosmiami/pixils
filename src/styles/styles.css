@@ -141,3 +141,7 @@ a{
    color: var(--background);
    background-color: var(--text);
  }
+ input{
+  background-color: var(--text);
+  color: var(--background);
+ }

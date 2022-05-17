@@ -53,6 +53,7 @@ export const Search = ({returnSearch, search}) => {
     <div className='container'>
     <div>
         <input
+        className='reverse'
         type="text"
         name="search"
         value={input  ?? ""}
@@ -63,9 +64,8 @@ export const Search = ({returnSearch, search}) => {
       />
         <p />
     </div>
-      
     {search && objkts.length > 0 && <div> search: {tag}<p /> </div>}
-        {search &&objkts.length > 0 && objkts.map(p=> (
+        {search && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
