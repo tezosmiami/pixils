@@ -99,10 +99,12 @@ export const Main = ({banned}) => {
            : null        
             ))}
 
-    
+        <div>
         <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
         <div style= {{borderBottom: '6px dotted', width: '80%'}} />
+        </div>
        </div>
+          <p/>
        <p>random objkts:</p>
       <div className='container'>
         {final && final.map(p=> (
