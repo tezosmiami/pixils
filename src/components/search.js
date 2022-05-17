@@ -13,7 +13,7 @@ export const Search = ({returnSearch, query, banned}) => {
     const [objkts, setObjkts] = useState([])
     const getSearch = gql`
     query querySearch {
-        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
+        tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
           mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
             mime_type
             artifact_uri
@@ -39,7 +39,7 @@ console.log(banned)
         setLoading(true)  
 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
-        const filtered = result.tags.filter((i) => !banned.includes(i.artist_address))
+        const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
