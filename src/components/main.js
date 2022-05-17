@@ -50,14 +50,12 @@ const fetcher = (key, query, offset, offsetNew) => request(process.env.REACT_APP
 //   return a;
 // }
 
-export const Main = () => {
+export const Main = ({banned}) => {
   const { mutate } = useSWRConfig()
   const [pageIndex, setPageIndex] = useState(0);
   const [offset, setOffset] = useState(0)
   const [offsetNew, setOffsetNew] = useState(0)
-  const [banned, setBanned] = useState()
-  const [objkts, setObjkts] = useState()
-  const axios = require('axios');
+
 
   useEffect(() => {
     const getTotal = async () => {
@@ -67,24 +65,13 @@ export const Main = () => {
     getTotal();
   }, [])
 
-  useEffect(() => {
-    const getBanned = async () => {
-    const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
-    setBanned(result.data)
-  }
-    getBanned();
-  }, [])
+
  
-  const getSearch = (data) => {
-    setObjkts(data);
-  }
-  
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
   
-
   const final = data?.random.filter((i) => !banned.includes(i.artist_address))
 
     return (

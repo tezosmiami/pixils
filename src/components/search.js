@@ -5,14 +5,12 @@ import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 
 
-export const Search = ({returnSearch, search}) => {
+export const Search = ({returnSearch, search, banned}) => {
     const navigate = useNavigate();
     const [tag, setTag] = useState(search?.toLowerCase())
     const [input, setInput] = useState()
     const [loading, setLoading] = useState(false)
     const [objkts, setObjkts] = useState([])
-    const [banned,setBanned] = useState()
-    const axios = require('axios');
     const getByTag = gql`
     query tags {
         tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_ilike: ${tag}}}}],
@@ -33,20 +31,15 @@ export const Search = ({returnSearch, search}) => {
      
     }
 
-    useEffect(() => {
-      const getBanned = async () => {
-      const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
-      setBanned(result.data)
-    }
-      getBanned();
-    }, [])
-
+console.log(banned)
     useEffect(() => {
     const getObjkts = async() => {
-        if (tag) { 
+        if (tag && banned) { 
+        setObjkts([])
         setLoading(true)  
+
         const result = await request(process.env.REACT_APP_TEZTOK_API, getByTag)
-        const filtered = result && result.tags.filter((i) => !banned.includes(i.artist_address))
+        const filtered = result.tags.filter((i) => !banned.includes(i.artist_address))
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
@@ -58,7 +51,7 @@ export const Search = ({returnSearch, search}) => {
         }
         }
         getObjkts();
-    }, [tag])
+    }, [tag,banned])
 
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
