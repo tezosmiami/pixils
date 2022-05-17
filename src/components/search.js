@@ -39,12 +39,9 @@ export const Search = ({returnSearch, query, banned}) => {
         if (search && banned) { 
         setObjkts([])
         setLoading(true)  
-
+        returnSearch([]) 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
-
-       
-          
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
@@ -60,6 +57,7 @@ export const Search = ({returnSearch, query, banned}) => {
     const isArtist = objkts.every((i) => i.artist_profile.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
+    console.log(search)
     return(
   <>
     <div className='container'>
@@ -78,9 +76,9 @@ export const Search = ({returnSearch, query, banned}) => {
     <p/>
     {loading && <div> loading. . .<p/></div> }
 
-    {search && objkts.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
-     !loading && search ? <div> 'empty return. . .'<p /> </div>: null} 
-        {search && objkts.length > 0 && objkts.map(p=> (
+    {query && objkts.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
+     !loading && query ? <div> empty return. . .<p /> </div> : null} 
+        {query && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 

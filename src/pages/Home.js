@@ -10,7 +10,7 @@ export const Home = () => {
   const [searchParams] = useSearchParams();
   const [banned,setBanned] = useState()
   const axios = require('axios');
-
+console.log(searchParams.get('search'))
   useEffect(() => {
     const getBanned = async () => {
     const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;

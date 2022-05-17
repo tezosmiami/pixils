@@ -30,7 +30,7 @@ export const LightButton = () => {
                 id={'lightButton'}
                 title={'Toggle Light mode'}
                 className={'icon'}
-
+                font-size={'108px'}
             >❶</button>
         </p>
  </div>
