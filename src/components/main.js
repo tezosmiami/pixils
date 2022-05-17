@@ -76,7 +76,7 @@ export const Main = ({banned}) => {
 
     return (
       <>
-      <p>recent objkts:</p>
+      <p style={{margtinTop:0}}>recent objkts:</p>
       <div className='container'>
         {data && data.recent.map(p=> (
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 

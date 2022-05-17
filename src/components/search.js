@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { request, gql } from 'graphql-request'
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 
@@ -20,6 +20,9 @@ export const Search = ({returnSearch, query, banned}) => {
             fa2_address
             token_id
             artist_address
+            artist_profile {
+              alias
+            }
           }
       }
   `
@@ -31,7 +34,6 @@ export const Search = ({returnSearch, query, banned}) => {
      
     }
 
-console.log(banned)
     useEffect(() => {
     const getObjkts = async() => {
         if (search && banned) { 
@@ -40,6 +42,9 @@ console.log(banned)
 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
+
+       
+          
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
@@ -52,7 +57,7 @@ console.log(banned)
         }
         getObjkts();
     }, [search,banned])
-
+    const isArtist = objkts.every((i) => i.artist_profile.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
     return(
@@ -69,10 +74,11 @@ console.log(banned)
         placeholder="search ↵"
         onKeyPress={handleKey}
       />
-        <p />
     </div>
-    {loading && 'loading. . .'}
-    {search && objkts.length > 0 ? <div> search: {search}<p /> </div> :
+    <p/>
+    {loading && <div> loading. . .<p/></div> }
+
+    {search && objkts.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
      !loading && search ? <div> 'empty return. . .'<p /> </div>: null} 
         {search && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 

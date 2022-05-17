@@ -155,3 +155,8 @@ a{
   text-indent: 65px;
 }
 
+.inline{
+  flex-direction: row;
+  margin-bottom: 1em;
+  justify-content: center;;
+}
