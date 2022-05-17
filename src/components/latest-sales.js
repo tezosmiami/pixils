@@ -75,9 +75,7 @@ export const LatestSales = () => {
   if (!data) return <p>Loading. . .</p>
 
   const final = data?.tokens.filter((i) => !banned.includes(i.artist_address))
-console.log(offset)
-console.log(data)
-console.log(final)
+
 //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
 //   });

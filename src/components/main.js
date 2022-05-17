@@ -33,22 +33,22 @@ export const getObjkts = gql`
    ` 
 const fetcher = (key, query, offset, offsetNew) => request(process.env.REACT_APP_TEZTOK_API, query, {offset, offsetNew})
 
-export function sliceChunks(arr, chunkSize) {
-  const res = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-      const chunk = arr.slice(i, i + chunkSize);
-      res.push(chunk);
-  }
-  return res;
-}
+// export function sliceChunks(arr, chunkSize) {
+//   const res = [];
+//   for (let i = 0; i < arr.length; i += chunkSize) {
+//       const chunk = arr.slice(i, i + chunkSize);
+//       res.push(chunk);
+//   }
+//   return res;
+// }
 
-export function shuffle(a) {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+// export function shuffle(a) {
+//   for (let i = a.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [a[i], a[j]] = [a[j], a[i]];
+//   }
+//   return a;
+// }
 
 export const Main = () => {
   const { mutate } = useSWRConfig()
@@ -56,7 +56,8 @@ export const Main = () => {
   const [offset, setOffset] = useState(0)
   const [offsetNew, setOffsetNew] = useState(0)
   const [banned, setBanned] = useState()
-
+  const [tag,setTag] = useState()
+  const [objkts, setObjkts] = useState([])
   const axios = require('axios');
 
   useEffect(() => {
@@ -74,40 +75,33 @@ export const Main = () => {
   }
     getBanned();
   }, [])
+ 
+  const getSearch = (data) => {
+    setObjkts(data);
+  }
   
-  
-  // const { data: total, error: totalerror} = useSWR([`/api/total`, getTotalObjkts, null], fetcher,{ refreshInterval: 5000 })
-  // setOffset(total?.tokens_aggregate.aggregate.count-108)
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
 
-  // const merge = data?.recent.concat(data.random)
   const final = data?.random.filter((i) => !banned.includes(i.artist_address))
-
-//   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
-//     return b.opid - a.opid;
-//   });
 
     return (
       <>
       <p>recent objkts:</p>
       <div className='container'>
         {data && data.recent.map(p=> (
-          // p.mime_type !== null &&
-          // p.eightbid_rgb === null &&
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
-           <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+           <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
           <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
           </a>
            :
-          // p.token.mime_type !== null &&
           p.mime_type.includes('video') ?  
-          <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+          <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
           p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
          : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
@@ -115,37 +109,18 @@ export const Main = () => {
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
             </div>
             </a>
-          // :
-          // p.eightbid_rgb !== null ?
-          //   //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
-          //   <a key={p.token_id} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
-          //      <div className='row'>
-          // {sliceChunks(p.eightbid_rgb,6).map((c,i) => {
-          //   return (
-          //     <div
-          //        key={`${c}-${i}`}
-          //        style={{backgroundColor: `#${c}`, width: '15px',
-          //        height: '15px', margin: '0' }}/> )})}
-          //     </div>
-          //     </a>
-          //    :
            : null        
             ))}
 
     
         <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
         <div style= {{borderBottom: '6px dotted', width: '80%'}} />
-       {/* <div>
-          <p></p>
-       </div> */}
        </div>
        <p>random objkts:</p>
       <div className='container'>
         {final && final.map(p=> (
-          // p.mime_type !== null &&
-          // p.eightbid_rgb === null &&
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
-           <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+           <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
@@ -154,7 +129,7 @@ export const Main = () => {
            :
           // p.token.mime_type !== null &&
           p.mime_type.includes('video') ?  
-          <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+          <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
           p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
          : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
@@ -162,26 +137,12 @@ export const Main = () => {
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
             </div>
             </a>
-          // :
-          // p.eightbid_rgb !== null ?
-          //   //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
-          //   <a key={p.token_id} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
-          //      <div className='row'>
-          // {sliceChunks(p.eightbid_rgb,6).map((c,i) => {
-          //   return (
-          //     <div
-          //        key={`${c}-${i}`}
-          //        style={{backgroundColor: `#${c}`, width: '15px',
-          //        height: '15px', margin: '0' }}/> )})}
-          //     </div>
-          //     </a>
-          //    :
            : null        
             ))}
        <div>
           <p></p>
        </div>
-       </div>
+       </div>}
        <div>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   
