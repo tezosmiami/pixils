@@ -141,7 +141,17 @@ a{
    color: var(--background);
    background-color: var(--text);
  }
- input{
-  background-color: var(--text);
-  color: var(--background);
- }
+ 
+ .searchbar{
+  border-radius: 3%;
+  height:18px;
+  width: 188px; 
+  font-family: 'Courier New', Courier, monospace;
+  font-size:16px;
+}
+
+::-webkit-input-placeholder{
+  color:rgba(188, 188, 188);
+  text-indent: 69px;
+}
+

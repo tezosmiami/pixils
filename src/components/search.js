@@ -9,7 +9,8 @@ export const Search = ({returnSearch, search}) => {
     const navigate = useNavigate();
     const [tag, setTag] = useState(search?.toLowerCase())
     const [input, setInput] = useState()
-    const [objkts, setObjkts] = useState([])
+    const [loading, setLoading] = useState()
+    const [objkts, setObjkts] = useState()
     const getByTag = gql`
     query tags {
         tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_ilike: ${tag}}}}],
@@ -34,6 +35,7 @@ export const Search = ({returnSearch, search}) => {
     useEffect(() => {
     const getObjkts = async() => {
         if (tag) { 
+        setLoading(true)  
         const result = await request(process.env.REACT_APP_TEZTOK_API, getByTag)
         setObjkts(result.tags)
         returnSearch(result.tags)
@@ -42,18 +44,19 @@ export const Search = ({returnSearch, search}) => {
             search: `search=${tag}`,
             replace: false
           });
+         setLoading(false); 
         }
         }
         getObjkts();
     }, [tag])
-
-
+console.log (objkts)
+    if (!objkts ) return <p>loading. . .</p>
     return(
   <>
     <div className='container'>
     <div>
         <input
-        className='reverse'
+        className='reverse searchbar'
         type="text"
         name="search"
         value={input  ?? ""}
@@ -64,7 +67,8 @@ export const Search = ({returnSearch, search}) => {
       />
         <p />
     </div>
-    {search && objkts.length > 0 && <div> search: {tag}<p /> </div>}
+    {search && objkts.length > 0 ? <div> search: {tag}<p /> </div> :
+     !loading ? 'empty return. . .' : null} 
         {search && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
@@ -83,7 +87,7 @@ export const Search = ({returnSearch, search}) => {
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
             </div>
             </a>
-           : null        
+           : !objkts ? 'loading. . .' : ''
             ))}
        </div>
        
