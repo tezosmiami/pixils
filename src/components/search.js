@@ -12,7 +12,7 @@ export const Search = ({returnSearch, search}) => {
     const [objkts, setObjkts] = useState([])
     const getByTag = gql`
     query tags {
-        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_eq: ${tag}}}}],
+        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_ilike: ${tag}}}}],
           mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
             mime_type
             artifact_uri
