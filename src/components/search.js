@@ -45,6 +45,7 @@ export const Search = ({returnSearch, search}) => {
     const getObjkts = async() => {
         if (tag) { 
         setLoading(true)  
+        setObjkts([])
         const result = await request(process.env.REACT_APP_TEZTOK_API, getByTag)
         const filtered = result?.tags.filter((i) => !banned.includes(i.artist_address))
         setObjkts(filtered)
