@@ -9,8 +9,8 @@ export const Search = ({returnSearch, query, banned}) => {
     const navigate = useNavigate();
     const [search, setSearch] = useState(query?.toLowerCase())
     const [input, setInput] = useState()
-    const [loading, setLoading] = useState(false)
-    const [objkts, setObjkts] = useState([])
+    const [loading, setLoading] = useState()
+    const [objkts, setObjkts] = useState()
     const getSearch = gql`
     query querySearch {
         tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
@@ -42,6 +42,8 @@ export const Search = ({returnSearch, query, banned}) => {
         returnSearch([]) 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
+        !filtered && console.log('hell')
+        console.log(filtered)
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
@@ -54,10 +56,10 @@ export const Search = ({returnSearch, query, banned}) => {
         }
         getObjkts();
     }, [search,banned])
-    const isArtist = objkts.every((i) => i.artist_profile.alias === search)
+    const isArtist = objkts?.every((i) => i.artist_profile.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
-    console.log(search)
+
     return(
   <>
     <div className='container'>
@@ -74,11 +76,11 @@ export const Search = ({returnSearch, query, banned}) => {
       />
     </div>
     <p/>
-    {loading && <div> loading. . .<p/></div> }
+    {loading && query && <div> loading. . .<p/></div> }
 
-    {query && objkts.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
-     !loading && query ? <div> empty return. . .<p /> </div> : null} 
-        {query && objkts.length > 0 && objkts.map(p=> (
+    {query && objkts?.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
+     !loading && query && objkts ? <div> empty return. . .<p /> </div> : null} 
+        {query && objkts?.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
