@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player'
 
 export const Search = ({returnSearch, search}) => {
     const navigate = useNavigate();
-    const [tag, setTag] = useState(search)
+    const [tag, setTag] = useState(search?.toLowerCase())
     const [input, setInput] = useState()
     const [objkts, setObjkts] = useState([])
     const getByTag = gql`
@@ -24,7 +24,7 @@ export const Search = ({returnSearch, search}) => {
   `
     const handleKey = (e) => {
         if (e.key == 'Enter') { 
-            setTag(e.target.value)
+            setTag(e.target.value?.toLowerCase())
             setInput('')
         }
      
