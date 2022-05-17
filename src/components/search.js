@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player'
 
 export const Search = ({returnSearch, query, banned}) => {
     const navigate = useNavigate();
-    const [search, setSearch] = useState(query.toLowerCase())
+    const [search, setSearch] = useState(query?.toLowerCase())
     const [input, setInput] = useState()
     const [loading, setLoading] = useState(false)
     const [objkts, setObjkts] = useState([])
