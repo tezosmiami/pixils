@@ -86,7 +86,6 @@ a{
     flex-direction: row;
     flex-wrap:wrap;
     justify-content: center;
-    cursor:pointer;
     
   }
 
@@ -100,6 +99,7 @@ a{
     border: 6px solid var(--text);
     border-radius: 3%;
     padding: 6px;
+    cursor:pointer;
   }
   .video{
       height:360px;
