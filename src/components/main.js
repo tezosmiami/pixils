@@ -56,7 +56,6 @@ export const Main = () => {
   const [offset, setOffset] = useState(0)
   const [offsetNew, setOffsetNew] = useState(0)
   const [banned, setBanned] = useState()
-  const [tag,setTag] = useState()
   const [objkts, setObjkts] = useState()
   const axios = require('axios');
 
@@ -84,6 +83,7 @@ export const Main = () => {
 
   if (error) return <p>error</p>
   if (!data) return <p>loading. . .</p>
+  
 
   const final = data?.random.filter((i) => !banned.includes(i.artist_address))
 
