@@ -5,15 +5,15 @@ import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 
 
-export const Search = ({returnSearch, search, banned}) => {
+export const Search = ({returnSearch, query, banned}) => {
     const navigate = useNavigate();
-    const [tag, setTag] = useState(search?.toLowerCase())
+    const [search, setSearch] = useState(query.toLowerCase())
     const [input, setInput] = useState()
     const [loading, setLoading] = useState(false)
     const [objkts, setObjkts] = useState([])
-    const getByTag = gql`
-    query tags {
-        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_ilike: ${tag}}}}],
+    const getSearch = gql`
+    query querySearch {
+        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
           mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
             mime_type
             artifact_uri
@@ -25,7 +25,7 @@ export const Search = ({returnSearch, search, banned}) => {
   `
     const handleKey = (e) => {
         if (e.key == 'Enter') { 
-            setTag(e.target.value?.toLowerCase())
+            setSearch(e.target.value?.toLowerCase())
             setInput('')
         }
      
@@ -34,24 +34,24 @@ export const Search = ({returnSearch, search, banned}) => {
 console.log(banned)
     useEffect(() => {
     const getObjkts = async() => {
-        if (tag && banned) { 
+        if (search && banned) { 
         setObjkts([])
         setLoading(true)  
 
-        const result = await request(process.env.REACT_APP_TEZTOK_API, getByTag)
+        const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tags.filter((i) => !banned.includes(i.artist_address))
         setObjkts(filtered)
         returnSearch(filtered)
         navigate({
             pathname: '/',
-            search: `search=${tag}`,
+            search: `search=${search}`,
             replace: false
           });
          setLoading(false); 
         }
         }
         getObjkts();
-    }, [tag,banned])
+    }, [search,banned])
 
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
@@ -72,7 +72,7 @@ console.log(banned)
         <p />
     </div>
     {loading && 'loading. . .'}
-    {search && objkts.length > 0 ? <div> search: {tag}<p /> </div> :
+    {search && objkts.length > 0 ? <div> search: {search}<p /> </div> :
      !loading && search ? <div> 'empty return. . .'<p /> </div>: null} 
         {search && objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
