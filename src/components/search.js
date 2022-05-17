@@ -12,7 +12,8 @@ export const Search = ({returnSearch, search}) => {
     const [objkts, setObjkts] = useState([])
     const getByTag = gql`
     query tags {
-        tags: tokens(where: {editions: {_eq: "1"}, tags: {tag: {_ilike: ${tag}}},mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}) {
+        tags: tokens(where: {_or: [{tags: {tag: {_ilike: ${tag}}}}, {artist_profile: {alias: {_eq: ${tag}}}}],
+          mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
             mime_type
             artifact_uri
             fa2_address
@@ -63,7 +64,7 @@ export const Search = ({returnSearch, search}) => {
         <p />
     </div>
       
-    {search && objkts.length > 0 && <div> tag: {tag}<p /> </div>}
+    {search && objkts.length > 0 && <div> search: {tag}<p /> </div>}
         {search &&objkts.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
