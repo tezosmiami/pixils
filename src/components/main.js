@@ -3,15 +3,15 @@ import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 
-export const getCount = gql`
-  query total{
-    tokens_aggregate(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}) {
-    aggregate {
-      count
-    }
-  }
-}
-`
+// export const getCount = gql`
+//   query total{
+//     tokens_aggregate(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}) {
+//     aggregate {
+//       count
+//     }
+//   }
+// }
+// `
 export const getObjkts = gql`
   query objkts ($offset: Int!, $offsetNew: Int!) {
     random: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offset, limit: 81) {
@@ -38,17 +38,17 @@ const fetcher = (key, query, offset, offsetNew) => request(process.env.REACT_APP
 export const Main = ({banned}) => {
   const { mutate } = useSWRConfig()
   const [pageIndex, setPageIndex] = useState(0);
-  const [offset, setOffset] = useState(0)
+  const [offset, setOffset] = useState(Math.floor(Math.floor(Math.random() * 195000)))
   const [offsetNew, setOffsetNew] = useState(0)
 
 
-  useEffect(() => {
-    const getTotal = async () => {
-      const result = await request(process.env.REACT_APP_TEZTOK_API, getCount)
-      setOffset(Math.floor(Math.floor(Math.random() * result.tokens_aggregate.aggregate.count)))
-  }
-    getTotal();
-  }, [])
+  // useEffect(() => {
+  //   const getTotal = async () => {
+  //     const result = await request(process.env.REACT_APP_TEZTOK_API, getCount)
+  //     setOffset(Math.floor(Math.floor(Math.random() * result.tokens_aggregate.aggregate.count)))
+  // }
+  //   getTotal();
+  // }, [])
  
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
