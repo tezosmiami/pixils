@@ -4,20 +4,13 @@ import { Search } from '../components/search';
 import { useSearchParams } from 'react-router-dom';
 import ToggleSwitch from '../components/toggle';
 
-export const Home = () => {
+export const Home = ({banned}) => {
   const [toggled, setToggled ] = useState(false);
   const [searchData,setSearchData] = useState([]);
   const [searchParams] = useSearchParams();
-  const [banned,setBanned] = useState()
-  const axios = require('axios');
 
-  useEffect(() => {
-    const getBanned = async () => {
-    const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
-    setBanned(result.data)
-  }
-    getBanned();
-  }, [])
+
+ 
     return (
       <>
       {/* <a style={{marginLeft:'21px'}}>{!toggled ? 'Sales' : 'Mints'}</a> */}

@@ -68,6 +68,7 @@ a{
     color: var(--text);
     text-decoration:none;
     cursor: pointer;
+    align-content: center;
 }
 .purple{
     color: var(--text);
@@ -159,4 +160,12 @@ a{
   flex-direction: row;
   margin-bottom: 1em;
   justify-content: center;;
+}
+.view {
+  width: 55vw;
+  object-fit: contain;
+  border: 6px solid var(--text);
+  border-radius: 3%;
+  padding: 6px;
+  cursor:pointer;
 }

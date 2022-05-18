@@ -36,6 +36,7 @@ export const Search = ({returnSearch, query, banned}) => {
           fa2_address
           token_id
           artist_address
+          symbol
       }
       tags: tokens(where: {tags: {tag: {_eq: ${search}}},
         mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
@@ -45,6 +46,7 @@ export const Search = ({returnSearch, query, banned}) => {
           fa2_address
           token_id
           artist_address
+
       }
     }`
 
@@ -103,24 +105,15 @@ export const Search = ({returnSearch, query, banned}) => {
     {query && objkts?.length > 0 ? <div className='inline'> {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
      !loading && query && objkts ? <div> empty return. . .<p /> </div> : null} 
         {query && objkts?.length > 0 && objkts.map(p=> (
-           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
-           <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
-              p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
-
-             : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.display_uri.slice(7)}/> 
-          </a>
-           :
-          p.mime_type.includes('video') ?  
-          <a key={p.artifact_uri+p.token_id} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
-          p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
-
-         : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
+           <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
+          {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
+          <img alt='' className= 'pop'  src={'https://gateway.ipfs.io/ipfs/' + p.display_uri.slice(7)}/> 
+          : p.mime_type.includes('video') ? 
            <div className='pop video'>
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
             </div>
-            </a>
-           : ''
+           : ''}
+           </Link>
             ))}
        </div>
        
