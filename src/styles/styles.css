@@ -16,7 +16,7 @@
     src: url('fonts/advantage.regular.ttf') format('truetype');
   }
 :root {
- --background: #343434;
+ --background: #181818;
  --text: #d8d8d8;
  /* background-color: linear-gradient(to bottom right, #ff0066, #2d27ff); */
  height: 100%;
@@ -151,7 +151,7 @@ a{
 }
 
 ::-webkit-input-placeholder{
-  color:white;
+  color:gray;
   text-indent: 65px;
 }
 
