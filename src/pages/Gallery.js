@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Profile } from '../components/profile';
 
-export const Gallery = () => {
+export const Gallery = ({banned}) => {
   const [toggled, setToggled ] = useState(false);
     return (
       <>
@@ -10,7 +10,7 @@ export const Gallery = () => {
         isToggled={toggled}
         handleToggle={() => setToggled(!toggled)}/>
        {!toggled ? <LatestSales /> : <LatestMints/>} */}
-       <Profile />
+       <Profile banned={banned}/>
       </>
     );
   }

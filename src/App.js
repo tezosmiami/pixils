@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useUserContext } from "./context/user-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
 import { Gallery } from './pages/Gallery'
+import { Objkt } from './pages/Objkt'
 import { LightButton } from './components/light-button';
 import "./styles/styles.css";
 
 const fonts = ['Halo', 'Advantage', 'Faster One']
+
 function App() {
-
   const  app = useUserContext();
+  const axios = require('axios');
+  const [banned, setBanned] = useState();
+  
 
-
-useEffect(() => {
+  useEffect(() => {
     var r = document.querySelector(':root')
     r.style.setProperty('--font', fonts[Math.floor(Math.random()* fonts.length)])
   }, [])
 
+  useEffect(() => {
+    const getBanned = async () => {
+    const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
+    setBanned(result.data)
+  }
+    getBanned();
+  }, [])
   return(
     <>
     <header>
@@ -40,9 +50,11 @@ useEffect(() => {
 
      <div>
      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/:account' element={<Gallery />} />
-
+        <Route path="/" element={<Home banned={banned} />} />
+        <Route path='/:account' element={<Gallery banned={banned}/>} />
+        <Route path=":contract" >
+          <Route path=":id" element={<Objkt banned={banned}/>} />
+       </Route>
       </Routes>
     </div>
     <LightButton />
