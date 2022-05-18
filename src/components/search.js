@@ -11,21 +11,41 @@ export const Search = ({returnSearch, query, banned}) => {
     const [input, setInput] = useState()
     const [loading, setLoading] = useState()
     const [objkts, setObjkts] = useState()
-    const getSearch = gql`
+  //   const getSearch = gql`
+  //   query querySearch {
+  //       tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
+  //         mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
+  //           mime_type
+  //           artifact_uri
+  //           fa2_address
+  //           token_id
+  //           artist_address
+  //           artist_profile {
+  //             alias
+  //           }
+  //         }
+  //     }
+  // `
+  const getSearch = gql`
     query querySearch {
-        tokens(where: {_or: [{tags: {tag: {_ilike: ${search}}}}, {artist_profile: {alias: {_ilike: ${search}}}}],
-          mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
-            mime_type
-            artifact_uri
-            fa2_address
-            token_id
-            artist_address
-            artist_profile {
-              alias
-            }
-          }
+      aliases: tokens(where: {artist_profile: {alias: {_ilike: ${search}}},
+        mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}) {
+          mime_type
+          artifact_uri
+          fa2_address
+          token_id
+          artist_address
       }
-  `
+      tags: tokens(where: {tags: {tag: {_eq: ${search}}},
+        mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
+          mime_type
+          artifact_uri
+          fa2_address
+          token_id
+          artist_address
+      }
+    }`
+
     const handleKey = (e) => {
         if (e.key == 'Enter') { 
             setSearch(e.target.value?.toLowerCase())
@@ -40,9 +60,12 @@ export const Search = ({returnSearch, query, banned}) => {
         setObjkts([])
         setLoading(true)  
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
-        const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
-        setObjkts(filtered)
-        returnSearch(filtered)
+        const aliases = result.aliases.filter((i) => !banned.includes(i.artist_address))
+        const tags = result.tags.filter((i) => !banned.includes(i.artist_address))
+        const deduped = tags.filter((i) => !aliases.includes(i.artifact_uri))
+        const total = aliases.concat(deduped)
+        setObjkts(total)
+        returnSearch(total)
         navigate({
             pathname: '/',
             search: `search=${search}`,
