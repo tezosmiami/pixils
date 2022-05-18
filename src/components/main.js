@@ -22,7 +22,7 @@ export const getObjkts = gql`
       artist_address
     }
 
-    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {minted_at: desc}, limit: 27) {
+    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {last_processed_event_timestamp: desc}, limit: 27, distinct_on: last_processed_event_timestamp) {
       mime_type
       artifact_uri
       fa2_address
@@ -32,23 +32,6 @@ export const getObjkts = gql`
   }  
    ` 
 const fetcher = (key, query, offset, offsetNew) => request(process.env.REACT_APP_TEZTOK_API, query, {offset, offsetNew})
-
-// export function sliceChunks(arr, chunkSize) {
-//   const res = [];
-//   for (let i = 0; i < arr.length; i += chunkSize) {
-//       const chunk = arr.slice(i, i + chunkSize);
-//       res.push(chunk);
-//   }
-//   return res;
-// }
-
-// export function shuffle(a) {
-//   for (let i = a.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [a[i], a[j]] = [a[j], a[i]];
-//   }
-//   return a;
-// }
 
 export const Main = ({banned}) => {
   const { mutate } = useSWRConfig()
@@ -64,8 +47,6 @@ export const Main = ({banned}) => {
   }
     getTotal();
   }, [])
-
-
  
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
