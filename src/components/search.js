@@ -32,6 +32,7 @@ export const Search = ({returnSearch, query, banned}) => {
         mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}) {
           mime_type
           artifact_uri
+          display_uri
           fa2_address
           token_id
           artist_address
@@ -40,6 +41,7 @@ export const Search = ({returnSearch, query, banned}) => {
         mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
           mime_type
           artifact_uri
+          display_uri
           fa2_address
           token_id
           artist_address
@@ -106,7 +108,7 @@ export const Search = ({returnSearch, query, banned}) => {
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.display_uri.slice(7)}/> 
           </a>
            :
           p.mime_type.includes('video') ?  

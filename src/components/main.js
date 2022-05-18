@@ -17,6 +17,7 @@ export const getObjkts = gql`
     random: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offset, limit: 81) {
       mime_type
       artifact_uri
+      display_uri
       fa2_address
       token_id
       artist_address
@@ -25,6 +26,7 @@ export const getObjkts = gql`
     recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {last_processed_event_timestamp: desc}, limit: 27, distinct_on: last_processed_event_timestamp) {
       mime_type
       artifact_uri
+      display_uri
       fa2_address
       token_id
       artist_address
@@ -65,7 +67,7 @@ export const Main = ({banned}) => {
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
 
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.display_uri.slice(7)}/> 
           </a>
            :
           p.mime_type.includes('video') ?  
