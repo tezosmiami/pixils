@@ -83,11 +83,13 @@ return(
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
-            <p>{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on {objkt.symbol === 'OBJKT' ? 'H=N' : objkt.symbol}</p>
+            <p>{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on <a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
+params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
+: `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">{objkt.symbol === 'OBJKT' ? 'H=N' : objkt.symbol === "VERSUM" ? objkt.symbol : "OBJKT"}</a></p>
             </div>
           {/* </a> */}
             
-             <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'33px'}} />
+             <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'27px'}} />
         <div style= {{borderBottom: '6px dotted', width: '63%', marginBottom: '33px'}} />
   </>
 )
