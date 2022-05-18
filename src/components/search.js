@@ -39,7 +39,6 @@ export const Search = ({returnSearch, query, banned}) => {
         if (search && banned) { 
         setObjkts([])
         setLoading(true)  
-        returnSearch([]) 
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
         setObjkts(filtered)
@@ -54,7 +53,7 @@ export const Search = ({returnSearch, query, banned}) => {
         }
         getObjkts();
     }, [search,banned])
-    const isArtist = objkts?.every((i) => i.artist_profile.alias === search)
+    const isArtist = objkts?.every((i) => i.artist_profile?.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
 
@@ -74,9 +73,9 @@ export const Search = ({returnSearch, query, banned}) => {
       />
     </div>
     <p/>
-    {loading && query && <div> loading. . .<p/></div> }
+    {loading && search && <div> searching: {search}. . .<p/></div> }
 
-    {query && objkts?.length > 0 ? <div className='inline'> search: {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
+    {query && objkts?.length > 0 ? <div className='inline'> {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
      !loading && query && objkts ? <div> empty return. . .<p /> </div> : null} 
         {query && objkts?.length > 0 && objkts.map(p=> (
            p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
