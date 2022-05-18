@@ -17,7 +17,7 @@
   }
 :root {
  --background: #181818;
- --text: #d8d8d8;
+ --text: #e8e8e8;
  /* background-color: linear-gradient(to bottom right, #ff0066, #2d27ff); */
  height: 100%;
   --font: 'Halo';
@@ -126,7 +126,7 @@ a{
 /* s */
 .lightMode {
     --text: #343434;
-    --background: #d8d8d8;
+    --background: #e8e8e8;
     /* background: linear-gradient(to bottom right, #2d27ff,white,  #ff0066); */
     /* background-image: linear-gradient(#d063ff,#ff69eb); */
  }
