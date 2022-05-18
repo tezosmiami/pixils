@@ -23,7 +23,7 @@ export const getObjkts = gql`
       artist_address
     }
 
-    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {last_processed_event_timestamp: desc}, limit: 27, distinct_on: last_processed_event_timestamp) {
+    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {minted_at: desc}, limit: 27) {
       mime_type
       artifact_uri
       display_uri
