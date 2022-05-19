@@ -166,6 +166,7 @@ a{
   object-fit: contain;
   border: 6px solid var(--text);
   border-radius: 3%;
+  word-wrap: break-word;
   padding: 6px;
   cursor:pointer;
 }
