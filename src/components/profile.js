@@ -54,23 +54,23 @@ export const Profile = ({banned}) => {
   
   if (subjkt && !address ) return <p>nada. . .</p>
   if (error) return <p>error</p>
-  if (!data || !banned) return <p>loading. . .</p>
+  if (!data && !banned && !subjkt) return <p>loading. . .</p>
   
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;
   
-  const filteredcreated = data.created.filter((i) => !banned.includes(i.artist_address))
-  const filteredcollected = data.collected.filter((i) => !banned.includes(i.artist_address))
+  const filteredcreated = data?.created.filter((i) => !banned.includes(i.artist_address))
+  const filteredcollected = data?.collected.filter((i) => !banned.includes(i.artist_address))
   
   //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
 //   });
-console.log(filteredcollected,filteredcollected )
+
     return (
       <>
   
       <p  style={{fontSize:'25px'}}>
-      <a href={subjkt.tzprofiles[0].twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
+      <a href={subjkt?.tzprofiles[0]?.twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
         {account?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : account}
       </a></p>
       <p>created:</p>
@@ -78,7 +78,7 @@ console.log(filteredcollected,filteredcollected )
         {filteredcreated && filteredcreated.map(p=> (
            <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-           <img alt='' className= 'pop'  src={'https://gateway.ipfs.io/ipfs/' + p?.artifact_uri?.slice(7)}/> 
+           <img alt='' className= 'pop'  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
            : p.mime_type.includes('video') ? 
             <div  className='pop video'>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p?.artifact_uri?.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
@@ -86,20 +86,18 @@ console.log(filteredcollected,filteredcollected )
             : ''}
             </Link>
              ))}
-          
+          </div>
           <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
          <div style= {{borderBottom: '6px dotted', width: '80%'}} />
        <div>
           <p></p>
-       </div>
-      
        </div>
        <p>collected:</p>
        <div className='container'>
         {filteredcollected && filteredcollected.map(p=> (
         <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
         {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-        <img alt='' className= 'pop'  src={'https://gateway.ipfs.io/ipfs/' + p?.artist_uri?.slice(7)}/> 
+        <img alt='' className= 'pop'  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
         : p.mime_type.includes('video') ? 
          <div  className='pop video'>
            <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
@@ -107,10 +105,11 @@ console.log(filteredcollected,filteredcollected )
          : ''}
          </Link>
           ))}
+          </div>
        <div>
           <p></p>
        </div>
-       </div>
+     
    
 
        {/* <div>
