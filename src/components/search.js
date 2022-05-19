@@ -28,7 +28,7 @@ export const Search = ({returnSearch, query, banned}) => {
   // `
   const getSearch = gql`
     query querySearch {
-      aliases: tokens(where: {artist_profile: {alias: {_ilike: ${search}}},
+      aliases: tokens(where: {editions: {_eq: "1"}, artist_profile: {alias: {_ilike: ${search}}},
         mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}) {
           mime_type
           artifact_uri
@@ -66,8 +66,11 @@ export const Search = ({returnSearch, query, banned}) => {
         const result = await request(process.env.REACT_APP_TEZTOK_API, getSearch)
         const aliases = result.aliases.filter((i) => !banned.includes(i.artist_address))
         const tags = result.tags.filter((i) => !banned.includes(i.artist_address))
-        const deduped = tags.filter((i) => !aliases.includes(i.artifact_uri))
-        const total = aliases.concat(deduped)
+        const tags_artifacts = new Set(tags.map(({ artifact_uri }) => artifact_uri));
+        const total = [
+          ...tags,
+          ...aliases.filter(({ artifact_uri }) => !tags_artifacts.has(artifact_uri))
+        ];
         setObjkts(total)
         returnSearch(total)
         navigate({
@@ -83,7 +86,7 @@ export const Search = ({returnSearch, query, banned}) => {
     const isArtist = objkts?.every((i) => i.artist_profile?.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
-
+console.log(objkts)
     return(
   <>
     <div className='container'>
