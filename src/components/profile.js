@@ -54,7 +54,7 @@ export const Profile = ({banned}) => {
   
   if (subjkt && !address ) return <p>nada. . .</p>
   if (error) return <p>error</p>
-  if (!data ) return <p>loading. . .</p>
+  if (!data ) return <p>loading. . .<p/></p>
   
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;

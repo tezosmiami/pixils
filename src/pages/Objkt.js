@@ -19,7 +19,7 @@ export const Objkt = ({banned}) => {
           alias
           twitter
         }
-        symbol 
+        platform
         price
         mime_type
         description
@@ -40,7 +40,8 @@ export const Objkt = ({banned}) => {
           getObjkt();
       }, [params,banned])
 
-    if (objkt.length === 0) return('loading. . .')
+    if (objkt.length === 0) return <p>loading. . .<p/></p>
+
 return(
   <>
   
@@ -89,7 +90,8 @@ return(
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
             <p><a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
 params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
-: params.contract === 'KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp' ? `https://ui.8bidou.com/item/?id=${params.id}` : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on {objkt.symbol === 'OBJKT' ? 'H=N' : objkt.symbol === "VERSUM" ? objkt.symbol : params.contract === "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp" ? '8BiDOU' : 'OBJKT'}</a></p>
+: params.contract === 'KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp' ? `https://ui.8bidou.com/item/?id=${params.id}` : `https://objkt.com/asset/${params.contract}/${params.id}`}
+ target="blank"  rel="noopener noreferrer">{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on {objkt.platform === 'HEN' ? 'H=N' : objkt.platform === "VERSUM" ? objkt.platform : params.contract === "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp" ? '8BiDOU' : 'OBJKT'}</a></p>
             </div>
           {/* </a> */}
             
