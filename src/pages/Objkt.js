@@ -58,7 +58,7 @@ export const Objkt = ({banned}) => {
           setMessage('ready wallet. . .');
           const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id, price: objkt.price,
              contract: objkt.listings[0].contract_address, platform: objkt.platform});
-          setMessage(isCollected ? 'congratulations - you got it!' : 'something happened, please try again. . .');
+          setMessage(isCollected ? 'congratulations - you got it!' : 'transaction denied. . .');
         
       } catch(e) {
           setMessage('not found - please try again. . .');
