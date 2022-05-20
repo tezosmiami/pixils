@@ -2,6 +2,7 @@ import { useEffect, useState, createContext, useContext} from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { parse } from "graphql";
+import { Objkt } from "../pages/Objkt";
 
 const hicdex ='https://hdapi.teztools.io/v1/graphql'
 
@@ -105,19 +106,25 @@ export const TezosContextProvider = ({ children }) => {
     //  window.location.reload();
   }
 
-  async function collect({swap_id, price, contract ,platform}) {
+  async function collect({swap_id, price, contract, platform}) {
     try {
-        const interact = await tezos.wallet.at(contract)
-       const entrypoint = platform === 'OBJKT'? 'fulfill_ask'
-        : platform === 'VERSUM'? 'fulfill_ask' : 'collect';
-        console.log(swap_id)
-        const op = await interact.methods[entrypoint](parseFloat(swap_id))
-            .send({
-                amount: parseFloat(price),
-                mutez: true,
-                storageLimit: 310
-            });
-        await op.confirmation(2);
+      const interact = await tezos.wallet.at(contract)
+        const op = platform === 'VERSUM' ? await interact.methods['collect_swap'](1,swap_id)
+                  
+                  : platform === 'HEN' ? await interact.methods['collect'](swap_id)
+                
+                  : platform === '8BIDOU'? await interact.methods['buy'](1,swap_id,price) 
+  
+                  : ''
+
+        if(op) {await op.send({
+          amount: parseFloat(price),
+          mutez: true,
+          storageLimit: 310
+      }) 
+      // await op.confirmation(2)}
+    }
+
     } catch(e) {
         console.log('Error:', e);
         return false;
