@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, useContext} from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { parse } from "graphql";
 
 const hicdex ='https://hdapi.teztools.io/v1/graphql'
 
@@ -104,11 +105,13 @@ export const TezosContextProvider = ({ children }) => {
     //  window.location.reload();
   }
 
-  async function collect({swap_id, price, contract}) {
+  async function collect({swap_id, price, contract ,platform}) {
     try {
         const interact = await tezos.wallet.at(contract)
-        const op = await interact.methods
-            .collect(parseFloat(swap_id))
+       const entrypoint = platform === 'OBJKT'? 'fulfill_ask'
+        : platform === 'VERSUM'? 'fulfill_ask' : 'collect';
+        console.log(swap_id)
+        const op = await interact.methods[entrypoint](parseFloat(swap_id))
             .send({
                 amount: parseFloat(price),
                 mutez: true,

@@ -51,10 +51,11 @@ export const Objkt = ({banned}) => {
 
     if (objkt.length === 0) return <div>loading. . .<p/></div>
 
-    const handleCollect = ({swap_id, price, contract}) => async() => {
+    const handleCollect = () => async() => {
       try {
           setMessage('Preparing Objkt. . .');
-          const isCollected = await app.collect({swap_id, price, contract});
+          const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id, price: objkt.price,
+             contract: objkt.listings[0].contract_address, platform: objkt.platform});
           setMessage(isCollected ? 'You got it!' : 'something happened, please try again. . .');
         
       } catch(e) {
@@ -65,7 +66,7 @@ export const Objkt = ({banned}) => {
           setMessage(null);
       }, 3200);
     };
-
+console.log(objkt)
 return(
   <>
   
@@ -113,7 +114,7 @@ return(
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
             <p>{objkt.price > 0 ?
-                <a onClick={handleCollect({swap_id: objkt.listings[0].swap_id, price: objkt.price, contract: objkt.listings[0].contract_address})}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
+                <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} on <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
                     : objkt.platform === 'VERSUM' ? `https://versum.xyz/token/versum/${params.id}` 
                     : objkt.platform === '8BIDOU' ? `https://ui.8bidou.com/item/?id=${params.id}` 
