@@ -118,7 +118,6 @@ return(
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
             <p>{objkt.price > 0 ?
                  <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
-                    : objkt.price > 0 ? <a href={`https://objkt.com/asset/${params.contract}/${params.id}`}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
                     : objkt.platform === 'VERSUM' ? `https://versum.xyz/token/versum/${params.id}` 
                     : objkt.platform === '8BIDOU' && objkt.eightbid_rgb.length < 800 ? `https://ui.8bidou.com/item/?id=${params.id}` 
