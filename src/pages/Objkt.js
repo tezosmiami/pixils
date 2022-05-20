@@ -98,7 +98,6 @@ return(
       </div>
     // </a> 
     : null}
-    
     <div>
     <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'33px'}} />
         
