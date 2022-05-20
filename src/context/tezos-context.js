@@ -107,18 +107,16 @@ export const TezosContextProvider = ({ children }) => {
   }
 
   async function collect({swap_id, price, contract, platform}) {
+    console.log(price)
     try {
       const interact = await tezos.wallet.at(contract)
         const op = platform === 'VERSUM' ? await interact.methods['collect_swap'](1,swap_id)
-                  
                   : platform === 'HEN' ? await interact.methods['collect'](swap_id)
-                
-                  : platform === '8BIDOU'? await interact.methods['buy'](1,swap_id,price) 
-  
+                  : platform === '8BIDOU'? await interact.methods['buy'](swap_id, 1, price) 
                   : ''
 
         if(op) {await op.send({
-          amount: parseFloat(price),
+          amount: price,
           mutez: true,
           storageLimit: 310
       }) 

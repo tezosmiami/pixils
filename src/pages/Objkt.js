@@ -27,6 +27,7 @@ export const Objkt = ({banned}) => {
         mime_type
         description
         platform
+        eightbid_rgb
         tags {
           tag
         }
@@ -54,10 +55,10 @@ export const Objkt = ({banned}) => {
     const handleCollect = () => async() => {
       !app.address && setMessage('please sync. . .') 
       if(app.address) try {
-          setMessage('Preparing Objkt. . .');
+          setMessage('ready wallet. . .');
           const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id, price: objkt.price,
              contract: objkt.listings[0].contract_address, platform: objkt.platform});
-          setMessage(isCollected ? 'You got it!' : 'something happened, please try again. . .');
+          setMessage(isCollected ? 'congratulations - you got it!' : 'something happened, please try again. . .');
         
       } catch(e) {
           setMessage('not found - please try again. . .');
@@ -67,6 +68,7 @@ export const Objkt = ({banned}) => {
           setMessage(null);
       }, 3200);
     };
+
 return(
   <>
   
@@ -118,7 +120,8 @@ return(
                     : objkt.price > 0 ? <a href={`https://objkt.com/asset/${params.contract}/${params.id}`}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
                     : objkt.platform === 'VERSUM' ? `https://versum.xyz/token/versum/${params.id}` 
-                    : objkt.platform === '8BIDOU' ? `https://ui.8bidou.com/item/?id=${params.id}` 
+                    : objkt.platform === '8BIDOU' && objkt.eightbid_rgb.length < 800 ? `https://ui.8bidou.com/item/?id=${params.id}` 
+                    : objkt.platform === '8BIDOU' &&  objkt.eightbid_rgb.length > 800 ? `https://ui.8bidou.com/item_r/?id=${params.id}` 
                     : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">
                     {objkt.platform === 'HEN' ? 'H=N' : objkt.platform === "VERSUM" ? objkt.platform 
                     : objkt.platform === '8BIDOU' ? '8BiDOU' : 'OBJKT'}</a></p>
