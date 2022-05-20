@@ -52,7 +52,8 @@ export const Objkt = ({banned}) => {
     if (objkt.length === 0) return <div>loading. . .<p/></div>
 
     const handleCollect = () => async() => {
-      try {
+      !app.address && setMessage('please sync. . .') 
+      if(app.address) try {
           setMessage('Preparing Objkt. . .');
           const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id, price: objkt.price,
              contract: objkt.listings[0].contract_address, platform: objkt.platform});
@@ -66,7 +67,6 @@ export const Objkt = ({banned}) => {
           setMessage(null);
       }, 3200);
     };
-console.log(objkt)
 return(
   <>
   
@@ -124,7 +124,7 @@ return(
                     : objkt.platform === '8BIDOU' ? '8BiDOU' : 'OBJKT'}</a></p>
             </div>
           {/* </a> */}
-            
+            {message}
              <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'27px'}} />
         <div style= {{borderBottom: '6px dotted', width: '63%', marginBottom: '33px'}} />
   </>
