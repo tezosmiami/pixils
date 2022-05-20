@@ -106,7 +106,7 @@ return(
 
         </div>
        
-        <p style={{width: '60%', textAlign: 'justify', wordWrap: 'break-word', textJustify: 'inter-word' }}> {objkt.description}</p>
+        <p style={{width: '60%', textAlign: 'justify', wordWrap: 'break-word', textJustify: 'inter-word', textAlign:'center' }}> {objkt.description}</p>
         <div style= {{borderBottom: '6px dotted', width: '63%', margin: '33px'}} /> 
         {/* <a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
               params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
