@@ -86,7 +86,7 @@ export const Search = ({returnSearch, query, banned}) => {
     const isArtist = objkts?.every((i) => i.artist_profile?.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
-console.log(objkts)
+
     return(
   <>
     <div className='container'>

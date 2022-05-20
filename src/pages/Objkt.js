@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useTezosContext } from "../context/tezos-context";
 import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 import { useParams, Link } from 'react-router-dom';
 
 
+
 export const Objkt = ({banned}) => {
-  const [objkt,setObjkt] = useState([]);
+  const [objkt, setObjkt] = useState([]);
+  const [message, setMessage] = useState();
+  const app = useTezosContext();
   const params = useParams();
   const queryObjkt = gql`
     query objkt {
@@ -19,12 +23,20 @@ export const Objkt = ({banned}) => {
           alias
           twitter
         }
-        platform
         price
         mime_type
         description
+        platform
+        eightbid_rgb
         tags {
           tag
+        }
+        listings {
+          price
+          swap_id
+          contract_address
+          ask_id
+          type
         }
       }
     }  
@@ -42,7 +54,24 @@ export const Objkt = ({banned}) => {
 
     if (objkt.length === 0) return <div>loading. . .<p/></div>
     if (objkt[0] === 'nada') return <div>nada. . .<p/></div>
-      
+
+    const handleCollect = () => async() => {
+      !app.address && setMessage('please sync. . .') 
+      if(app.address) try {
+          setMessage('ready wallet. . .');
+          const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id || objkt.listings[0].ask_id, price: objkt.price,
+             contract: objkt.listings[0].contract_address, platform: objkt.listings[0].type.includes('OBJKT') ? 'OBJKT' : objkt.platform});
+          setMessage(isCollected ? 'congratulations - you got it!' : 'transaction denied. . .');
+        
+      } catch(e) {
+          setMessage('errors. . .');
+          console.log('Error: ', e);
+      }
+      setTimeout(() => {
+          setMessage(null);
+      }, 3200);
+    };
+
 return(
   <>
   
@@ -72,7 +101,6 @@ return(
       </div>
     // </a> 
     : null}
-    
     <div>
     <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'33px'}} />
         
@@ -82,20 +110,25 @@ return(
 
         </div>
        
-        <p style={{width: '60%', textAlign: 'justify', wordWrap: 'break-word', textJustify: 'inter-word' }}> {objkt.description}</p>
+        <p className='descript'> {objkt.description}</p>
         <div style= {{borderBottom: '6px dotted', width: '63%', margin: '33px'}} /> 
         {/* <a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
               params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
-            <p><a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
-params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
-: params.contract === 'KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp' ? `https://ui.8bidou.com/item/?id=${params.id}` : `https://objkt.com/asset/${params.contract}/${params.id}`}
- target="blank"  rel="noopener noreferrer">{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on {objkt.platform === 'HEN' ? 'H=N' : objkt.platform === "VERSUM" ? objkt.platform : params.contract === "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp" ? '8BiDOU' : 'OBJKT'}</a></p>
+            <p>{objkt.price > 0 ?
+                 <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
+                    : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
+                    : objkt.platform === 'VERSUM' ? `https://versum.xyz/token/versum/${params.id}` 
+                    : objkt.platform === '8BIDOU' && objkt.eightbid_rgb.length < 800 ? `https://ui.8bidou.com/item/?id=${params.id}` 
+                    : objkt.platform === '8BIDOU' &&  objkt.eightbid_rgb.length > 800 ? `https://ui.8bidou.com/item_r/?id=${params.id}` 
+                    : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">
+                    {objkt.platform === 'HEN' ? 'H=N' : objkt.platform === "VERSUM" ? objkt.platform 
+                    : objkt.platform === '8BIDOU' ? '8BiDOU' : 'OBJKT'}</a></p>
             </div>
           {/* </a> */}
-            
+            {message}
              <div style= {{borderBottom: '6px dotted', width: '63%', marginTop:'27px'}} />
         <div style= {{borderBottom: '6px dotted', width: '63%', marginBottom: '33px'}} />
   </>

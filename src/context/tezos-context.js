@@ -1,6 +1,8 @@
 import { useEffect, useState, createContext, useContext} from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import { parse } from "graphql";
+import { Objkt } from "../pages/Objkt";
 
 const hicdex ='https://hdapi.teztools.io/v1/graphql'
 
@@ -24,16 +26,16 @@ async function fetchGraphQL(queryObjkts, name, variables) {
   return await result.json()
 }
 
-const UserContext = createContext();
+const TezosContext = createContext();
 const options = {
   name: 'S1NGULARE'
  };
   
 const wallet = new BeaconWallet(options);
 
-export const useUserContext = () => {
+export const useTezosContext = () => {
 
-  const app = useContext(UserContext);
+  const app = useContext(TezosContext);
   if (!app) {
     throw new Error(
       `!app`
@@ -42,7 +44,7 @@ export const useUserContext = () => {
   return app;
 };
 
-export const UserContextProvider = ({ children }) => {
+export const TezosContextProvider = ({ children }) => {
   
   const [app, setApp] = useState("");
   const [address, setAddress] = useState("");
@@ -72,7 +74,7 @@ export const UserContextProvider = ({ children }) => {
     }, [tezos]);
   
   async function logIn() {
-    app.currentUser && await app.currentUser?.logOut();
+    app.currentWallet && await app.currentWallet?.logOut();
     await wallet.client.clearActiveAccount();
     await wallet.client.requestPermissions({
       network: {
@@ -104,15 +106,40 @@ export const UserContextProvider = ({ children }) => {
     //  window.location.reload();
   }
 
-  const wrapped = { ...app, tezos, logIn, logOut, activeAccount, address, name};
+  async function collect({swap_id, price, contract, platform}) {
+    console.log(swap_id, platform)
+    try {
+      const interact = await tezos.wallet.at(contract)
+        const op = platform === 'VERSUM' ? await interact.methods['collect_swap'](1,swap_id)
+                  : platform === 'HEN' ? await interact.methods['collect'](swap_id)
+                  : platform === '8BIDOU'? await interact.methods['buy'](swap_id, 1, price) 
+                  : platform === 'OBJKT'? await interact.methods['fulfill_ask'](swap_id)
+                  :''
+
+        if(op) {await op.send({
+          amount: price,
+          mutez: true,
+          storageLimit: 310
+      }) 
+      // await op.confirmation(2)}
+    }
+
+    } catch(e) {
+        console.log('Error:', e);
+        return false;
+    }
+    return true;
+};
+
+  const wrapped = { ...app, tezos, collect, logIn, logOut, activeAccount, address, name};
 
   return (
    
-    <UserContext.Provider value={wrapped}>
+    <TezosContext.Provider value={wrapped}>
            {children}
-    </UserContext.Provider>
+    </TezosContext.Provider>
   
   );
 };
 
-export default UserContextProvider;
+export default TezosContextProvider;

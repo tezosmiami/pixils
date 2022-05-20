@@ -141,14 +141,18 @@ a{
  .reverse{
    color: var(--background);
    background-color: var(--text);
+   
  }
  
  .searchbar{
   border-radius: 3%;
-  height:18px;
+  height:21px;
   width: 188px; 
   font-family: 'Courier New', Courier, monospace;
   font-size:16px;
+}
+input:focus {
+  outline-width: 0;
 }
 
 ::-webkit-input-placeholder{
@@ -169,4 +173,20 @@ a{
   word-wrap: break-word;
   padding: 6px;
   cursor:pointer;
+}
+
+.descript{
+  width: 60%; 
+  text-align: justify;
+  word-wrap:break-word;
+  text-justify: inter-word;
+  text-align-last:center;
+}
+
+.avatar{
+  width:66px;
+  height:66px;
+  border-radius: 60%;
+  border: 3px solid var(--text);
+  padding:3px;  
 }
