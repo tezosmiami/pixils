@@ -24,16 +24,16 @@ async function fetchGraphQL(queryObjkts, name, variables) {
   return await result.json()
 }
 
-const UserContext = createContext();
+const TezosContext = createContext();
 const options = {
   name: 'S1NGULARE'
  };
   
 const wallet = new BeaconWallet(options);
 
-export const useUserContext = () => {
+export const useTezosContext = () => {
 
-  const app = useContext(UserContext);
+  const app = useContext(TezosContext);
   if (!app) {
     throw new Error(
       `!app`
@@ -42,7 +42,7 @@ export const useUserContext = () => {
   return app;
 };
 
-export const UserContextProvider = ({ children }) => {
+export const TezosContextProvider = ({ children }) => {
   
   const [app, setApp] = useState("");
   const [address, setAddress] = useState("");
@@ -72,7 +72,7 @@ export const UserContextProvider = ({ children }) => {
     }, [tezos]);
   
   async function logIn() {
-    app.currentUser && await app.currentUser?.logOut();
+    app.currentWallet && await app.currentWallet?.logOut();
     await wallet.client.clearActiveAccount();
     await wallet.client.requestPermissions({
       network: {
@@ -104,15 +104,33 @@ export const UserContextProvider = ({ children }) => {
     //  window.location.reload();
   }
 
-  const wrapped = { ...app, tezos, logIn, logOut, activeAccount, address, name};
+  async function collect({swap_id, price, contract}) {
+    try {
+        const interact = await tezos.wallet.at(contract)
+        const op = await interact.methods
+            .collect(parseFloat(swap_id))
+            .send({
+                amount: parseFloat(price),
+                mutez: true,
+                storageLimit: 310
+            });
+        await op.confirmation(2);
+    } catch(e) {
+        console.log('Error:', e);
+        return false;
+    }
+    return true;
+};
+
+  const wrapped = { ...app, tezos, collect, logIn, logOut, activeAccount, address, name};
 
   return (
    
-    <UserContext.Provider value={wrapped}>
+    <TezosContext.Provider value={wrapped}>
            {children}
-    </UserContext.Provider>
+    </TezosContext.Provider>
   
   );
 };
 
-export default UserContextProvider;
+export default TezosContextProvider;

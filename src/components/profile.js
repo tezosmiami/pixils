@@ -24,6 +24,11 @@ query walletName($address: String) {
       fa2_address
       token_id
       mime_type
+      minter_profile {
+        alias
+        twitter
+        logo
+      }
     }
   
 
@@ -54,8 +59,8 @@ export const Profile = ({banned}) => {
   
   if (subjkt && !address ) return <p>nada. . .</p>
   if (error) return <p>error</p>
-  if (!data ) return <p>loading. . .<p/></p>
-  
+  if (!data ) return <div>loading. . .<p/></div>
+
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;
   
@@ -65,14 +70,14 @@ export const Profile = ({banned}) => {
   //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
 //   });
-
+ filteredcreated && console.log(filteredcreated[0].minter_profile?.logo)
     return (
       <>
-  
       <p  style={{fontSize:'25px'}}>
       <a href={subjkt?.tzprofiles[0]?.twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
         {account?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : account}
       </a></p>
+      <img style={{width:'55px', height: '55px', borderRadius: '60%'}}src={filteredcreated ? filteredcreated[0].minter_profile?.logo : null}/>
       <p>created:</p>
       <div className='container'>
         {filteredcreated && filteredcreated.map(p=> (

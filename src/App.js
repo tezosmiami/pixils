@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useUserContext } from "./context/user-context";
+import { useTezosContext } from "./context/tezos-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
 import { Gallery } from './pages/Gallery'
@@ -10,7 +10,7 @@ import "./styles/styles.css";
 const fonts = ['Halo', 'Advantage', 'Faster One']
 
 function App() {
-  const  app = useUserContext();
+  const  app = useTezosContext();
   const axios = require('axios');
   const [banned, setBanned] = useState();
   

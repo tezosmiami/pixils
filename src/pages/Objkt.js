@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useTezosContext } from "../context/tezos-context";
 import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 import { useParams, Link } from 'react-router-dom';
 
 
+
 export const Objkt = ({banned}) => {
-  const [objkt,setObjkt] = useState([]);
+  const [objkt, setObjkt] = useState([]);
+  const [message, setMessage] = useState();
+  const app = useTezosContext();
   const params = useParams();
   const queryObjkt = gql`
     query objkt {
@@ -19,12 +23,17 @@ export const Objkt = ({banned}) => {
           alias
           twitter
         }
-        platform
         price
         mime_type
         description
+        platform
         tags {
           tag
+        }
+        listings {
+          price
+          swap_id
+          contract_address
         }
       }
     }  
@@ -40,7 +49,22 @@ export const Objkt = ({banned}) => {
           getObjkt();
       }, [params,banned])
 
-    if (objkt.length === 0) return <p>loading. . .<p/></p>
+    if (objkt.length === 0) return <div>loading. . .<p/></div>
+
+    const handleCollect = ({swap_id, price, contract}) => async() => {
+      try {
+          setMessage('Preparing Objkt. . .');
+          const isCollected = await app.collect({swap_id, price, contract});
+          setMessage(isCollected ? 'You got it!' : 'something happened, please try again. . .');
+        
+      } catch(e) {
+          setMessage('not found - please try again. . .');
+          console.log('Error: ', e);
+      }
+      setTimeout(() => {
+          setMessage(null);
+      }, 3200);
+    };
 
 return(
   <>
@@ -88,10 +112,14 @@ return(
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
-            <p><a href={params.contract ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${params.id}` : 
-params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
-: params.contract === 'KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp' ? `https://ui.8bidou.com/item/?id=${params.id}` : `https://objkt.com/asset/${params.contract}/${params.id}`}
- target="blank"  rel="noopener noreferrer">{objkt.price > 0 ? `collect for ${objkt.price/1000000}ꜩ` : 'sold out'} on {objkt.platform === 'HEN' ? 'H=N' : objkt.platform === "VERSUM" ? objkt.platform : params.contract === "KT1MxDwChiDwd6WBVs24g1NjERUoK622ZEFp" ? '8BiDOU' : 'OBJKT'}</a></p>
+            <p>{objkt.price > 0 ?
+                <a onClick={handleCollect({swap_id: objkt.listings[0].swap_id, price: objkt.price, contract: objkt.listings[0].contract_address})}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
+                    : 'sold out'} on <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
+                    : objkt.platform === 'VERSUM' ? `https://versum.xyz/token/versum/${params.id}` 
+                    : objkt.platform === '8BIDOU' ? `https://ui.8bidou.com/item/?id=${params.id}` 
+                    : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">
+                    {objkt.platform === 'HEN' ? 'H=N' : objkt.symbol === "VERSUM" ? objkt.platform 
+                    : objkt.platform === '8BIDOU' ? '8BiDOU' : 'OBJKT'}</a></p>
             </div>
           {/* </a> */}
             
