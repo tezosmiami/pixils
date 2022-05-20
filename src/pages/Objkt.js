@@ -35,6 +35,8 @@ export const Objkt = ({banned}) => {
           price
           swap_id
           contract_address
+          ask_id
+          type
         }
       }
     }  
@@ -56,12 +58,12 @@ export const Objkt = ({banned}) => {
       !app.address && setMessage('please sync. . .') 
       if(app.address) try {
           setMessage('ready wallet. . .');
-          const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id, price: objkt.price,
-             contract: objkt.listings[0].contract_address, platform: objkt.platform});
+          const isCollected = await app.collect({swap_id: objkt.listings[0].swap_id || objkt.listings[0].ask_id, price: objkt.price,
+             contract: objkt.listings[0].contract_address, platform: objkt.listings[0].type.includes('OBJKT') ? 'OBJKT' : objkt.platform});
           setMessage(isCollected ? 'congratulations - you got it!' : 'transaction denied. . .');
         
       } catch(e) {
-          setMessage('not found - please try again. . .');
+          setMessage('errors. . .');
           console.log('Error: ', e);
       }
       setTimeout(() => {
@@ -114,7 +116,7 @@ return(
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
-            <p>{objkt.price > 0 && objkt.listings.swap_id && objkt.platform !== 'OBJKT' ?
+            <p>{objkt.price > 0 ?
                  <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : objkt.price > 0 ? <a href={`https://objkt.com/asset/${params.contract}/${params.id}`}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
