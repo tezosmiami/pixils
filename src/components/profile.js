@@ -57,10 +57,10 @@ export const Profile = ({banned}) => {
   const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
-  if (subjkt && !address ) return <p>nada. . .</p>
+  if (subjkt && !address ) return <div>nada. . .</div>
   if (error) return <p>error</p>
   if (!data ) return <div>loading. . .<p/></div>
-
+  
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;
   
@@ -74,10 +74,10 @@ export const Profile = ({banned}) => {
     return (
       <>
       <p  style={{fontSize:'25px'}}>
-      <a href={subjkt?.tzprofiles[0]?.twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
+        <a href={subjkt?.tzprofiles[0]?.twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
         {account?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : account}
       </a></p>
-      <img style={{width:'55px', height: '55px', borderRadius: '60%'}}src={filteredcreated ? filteredcreated[0].minter_profile?.logo : null}/>
+      {/* <img className='avatar' src={filteredcreated ? filteredcreated[0].minter_profile?.logo : null}/> */}
       <p>created:</p>
       <div className='container'>
         {filteredcreated && filteredcreated.map(p=> (

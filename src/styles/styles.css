@@ -170,3 +170,19 @@ a{
   padding: 6px;
   cursor:pointer;
 }
+
+.descript{
+  width: 60%; 
+  text-align: justify;
+  word-wrap:break-word;
+  text-justify: inter-word;
+  text-align-last:center;
+}
+
+.avatar{
+  width:66px;
+  height:66px;
+  border-radius: 60%;
+  border: 3px solid var(--text);
+  padding:3px;  
+}
