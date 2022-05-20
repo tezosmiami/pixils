@@ -17,6 +17,7 @@ export const Objkt = ({banned}) => {
       tokens(where: {fa2_address: {_eq: "${params.contract}"}, token_id: {_eq: "${params.id}"}}) {
         artist_address
         artifact_uri
+        display_uri
         name
         minted_at
         minter_profile {
@@ -83,7 +84,7 @@ return(
     //   `https://versum.xyz/token/versum/${params.id}`
     //   : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">  
     <a href = {`https://gateway.ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
-    <img alt='' className= 'view' src={'https://gateway.ipfs.io/ipfs/' + objkt.artifact_uri.slice(7)}/> 
+    <img alt='' className= 'view' src={`https://gateway.ipfs.io/ipfs/${objkt.display_uri.slice(7)}`}/> 
     </a>
     // </a>
     :

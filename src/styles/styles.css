@@ -102,6 +102,10 @@ a{
     padding: 6px;
     cursor:pointer;
   }
+  .pop:hover{
+    transform: scale(1.011);
+    transition-duration: .3s;
+  }
   .video{
       height:360px;
       width:270px;
