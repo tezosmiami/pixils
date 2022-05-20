@@ -34,14 +34,15 @@ export const Objkt = ({banned}) => {
           if (params && banned) { 
           const result = await request(process.env.REACT_APP_TEZTOK_API, queryObjkt)
           const filtered = result.tokens.filter((i) => !banned.includes(i.artist_address))
-          setObjkt(filtered[0])
+          setObjkt(filtered[0] || ['nada'] )
           }
           }
           getObjkt();
       }, [params,banned])
 
-    if (objkt.length === 0) return <p>loading. . .<p/></p>
-
+    if (objkt.length === 0) return <div>loading. . .<p/></div>
+    if (objkt[0] === 'nada') return <div>nada. . .<p/></div>
+      
 return(
   <>
   

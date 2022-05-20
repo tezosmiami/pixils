@@ -52,9 +52,9 @@ export const Profile = ({banned}) => {
   const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
-  if (subjkt && !address ) return <p>nada. . .</p>
+  if (subjkt && !address ) return <div>nada. . .</div>
   if (error) return <p>error</p>
-  if (!data ) return <p>loading. . .<p/></p>
+  if (!data ) return <div>loading. . .<p/></div>
   
   // const merge = data?.recent.concat(data.random)
   // const owned = data.alias.length > 0 ? data.alias : data.pk;
