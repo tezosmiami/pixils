@@ -68,7 +68,7 @@ export const Objkt = ({banned}) => {
           setMessage(null);
       }, 3200);
     };
-
+console.log(objkt)
 return(
   <>
   
@@ -114,7 +114,7 @@ return(
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
             <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
-            <p>{objkt.price > 0 && objkt.platform !== 'OBJKT' ?
+            <p>{objkt.price > 0 && objkt.listings.swap_id && objkt.platform !== 'OBJKT' ?
                  <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : objkt.price > 0 ? <a href={`https://objkt.com/asset/${params.contract}/${params.id}`}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
