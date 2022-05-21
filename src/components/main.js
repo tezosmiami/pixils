@@ -3,7 +3,15 @@ import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 import {  Link } from "react-router-dom";
 import ReactPlayer from 'react-player'
+import Masonry from 'react-masonry-css'
 
+const breakpointColumns = {
+  default: 4,
+  1500: 4,
+  1200: 3,
+  900: 2,
+  600: 1
+};
 // export const getCount = gql`
 //   query total{
 //     tokens_aggregate(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}) {
@@ -61,9 +69,12 @@ export const Main = ({banned}) => {
     return (
       <>
       <p style={{margtinTop:0}}>recent objkts:</p>
-      <div className='container'>
+      <Masonry
+        breakpointCols={breakpointColumns}
+        className='grid'
+         columnClassName='column'>
         {data && data.recent.map(p=> (
-           <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
+           <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
            <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('video') ? 
@@ -71,32 +82,35 @@ export const Main = ({banned}) => {
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
              </div>
             : ''}
-            </Link>    
+            </Link>   
             ))} 
-
+        </Masonry>
         <div>
         <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
         <div style= {{borderBottom: '6px dotted', width: '80%'}} />
         </div>
-       </div>
           <p/>
        <p>random objkts:</p>
-      <div className='container'>
+      <Masonry
+        breakpointCols={breakpointColumns}
+        className='grid'
+        columnClassName='column'>
         {final && final.map(p=> (
-         <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
-         {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-         <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
-         : p.mime_type.includes('video') ? 
-          <div className='pop video'>
-            <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
-           </div>
-          : ''}
-          </Link>      
-            ))}
-       <div>
+         <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
+            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
+           <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
+           : p.mime_type.includes('video') ? 
+            <div className='pop video'>
+              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+             </div>
+            : ''}
+            </Link>   
+            ))} 
+        </Masonry>
+        <div>
           <p></p>
        </div>
-       </div>
+
        <div>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   

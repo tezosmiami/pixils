@@ -34,6 +34,7 @@ body{
      */
      color:var(--text);
      background-color: var(--background);
+     width:100vw;
 }
 
 div{
@@ -41,7 +42,6 @@ div{
     flex-direction: column;
     align-items: center;
     font-size:18px;
-    width: 100vw; 
 
 }
 
@@ -82,21 +82,20 @@ a{
   }
 }
 .container{
-   
     width: 98vw;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap:wrap;
     justify-content: center;
     
   }
 
   .pop{
-    flex-direction: row;
-    flex-wrap:wrap;
-    height:360px;
-    width:270px;
-    object-fit: cover;
-    margin:6px;
+    /* flex-direction: row;
+    flex-wrap:wrap; */
+    /* height:360px; */
+    width:90%;
+    object-fit: contain;
+    margin:5px;
     border: 6px solid var(--text);
     border-radius: 3%;
     padding: 6px;
@@ -107,7 +106,7 @@ a{
     transition-duration: .3s;
   }
   .video{
-      height:360px;
+      /* height:360px; */
       width:270px;
       overflow:hidden;
   }
@@ -193,4 +192,29 @@ input:focus {
   border-radius: 60%;
   border: 3px solid var(--text);
   padding:3px;  
+}
+
+.grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  align-items: start;
+  flex-direction:row;
+  width: 96vw;
+}
+.column {
+position:relative;
+  background-clip: padding-box;
+
+}
+.column > * {
+  /* padding-left: 10px; gutter size */
+  background-clip: padding-box;
+
+}
+
+.center{
+  display:flex;
+  justify-content: center;
+  justify-content: center;
 }

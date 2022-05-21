@@ -3,8 +3,15 @@ import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
 import { useParams, Link } from 'react-router-dom';
+import Masonry from 'react-masonry-css'
 
-
+const breakpointColumns = {
+  default: 5,
+  1540: 4,
+  1230: 3,
+  920: 2,
+  610: 1
+};
 
 export const getSubjkt = gql`
 query Subjkt($address: String!) {
@@ -84,8 +91,12 @@ export const Profile = ({banned}) => {
       {/* <img className='avatar' src={filteredcreated ? filteredcreated[0].minter_profile?.logo : null}/> */}
       <p>created:</p>
       <div className='container'>
+      <Masonry
+        breakpointCols={breakpointColumns}
+        className='grid'
+         columnClassName='column'>
         {filteredcreated && filteredcreated.map(p=> (
-           <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
+           <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
            <img alt='' className= 'pop' src={`https://ipfs.io/ipfs/${p.platform==='8BIDOU' ? p.display_uri.slice(7) : p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('video') ? 
@@ -95,6 +106,7 @@ export const Profile = ({banned}) => {
             : ''}
             </Link>
              ))}
+             </Masonry>
           </div>
           <div style= {{borderBottom: '6px dotted', width: '80%', marginTop:'33px'}} />
          <div style= {{borderBottom: '6px dotted', width: '80%'}} />
@@ -103,17 +115,22 @@ export const Profile = ({banned}) => {
        </div>
        <p>collected:</p>
        <div className='container'>
+       <Masonry
+        breakpointCols={breakpointColumns}
+        className='grid'
+         columnClassName='column'>
         {filteredcollected && filteredcollected.map(p=> (
         <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
         {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
         <img alt='' className= 'pop'  src={'https://ipfs.io/ipfs/' + p.display_uri.slice(7)}/> 
         : p.mime_type.includes('video') ? 
-         <div  className='pop video'>
+         <div className='pop video'>
            <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
           </div>
          : ''}
          </Link>
           ))}
+          </Masonry>
           </div>
        <div>
           <p></p>

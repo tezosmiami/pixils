@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { request, gql } from 'graphql-request'
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import useSWR, { useSWRConfig } from 'swr';
 import ReactPlayer from 'react-player'
+import useSWR, { useSWRConfig } from 'swr';
+import Masonry from 'react-masonry-css'
+
+
+const breakpointColumns = {
+  default: 5,
+  1540: 4,
+  1230: 3,
+  920: 2,
+  610: 1
+};
+
 const getSearch = gql`
     query querySearch($word: String!){
       aliases: tokens(where: {editions: {_eq: "1"}, artifact_uri: {_is_null: false}, artist_profile: {alias: {_eq: $word}},
@@ -89,6 +100,7 @@ export const Search = ({returnSearch, query, banned}) => {
     return(
   <>
     <div className='container'>
+      <p></p>
     <div>
         <input
         className='reverse searchbar'
@@ -101,24 +113,25 @@ export const Search = ({returnSearch, query, banned}) => {
         onKeyPress={handleKey}
       />
     </div>
-    <p/>
+    <p/>  
     {loading && search && <div> searching: {search}. . .<p/></div> }
-
     {query && objkts?.length > 0 ? <div className='inline'> {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
      !loading && query && objkts ? <div> nada. . .<p /> </div> : null} 
-        {query && objkts?.length > 0 && objkts.map(p=> (
-           <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
-          {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-          <img alt='' className= 'pop'  src={`https://ipfs.io/ipfs/${p.display_uri.slice(7) || p.artifact_uri.slice(7)}`}/> 
-          : p.mime_type.includes('video') ? 
-           <div className='pop video'>
-             <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
-            </div>
-           : ''}
-           </Link>
-            ))}
-       </div>
-       
+       <Masonry
+         breakpointCols={breakpointColumns}
+         className='grid'
+         columnClassName='column'>
+       {query && objkts?.length > 0 && objkts.map(p=> (
+            <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
+              {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
+              <img alt='' className= 'pop' src={`https://gateway.ipfs.io/ipfs/${p.display_uri.slice(7) || p.artifact_uri.slice(7)}`}/> 
+                : p.mime_type.includes('video') ?
+                <ReactPlayer className='pop video' url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+                : ''}
+            </Link>
+          ))}
+       </Masonry>
+        </div>
        </>
     );
   }
