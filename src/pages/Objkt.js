@@ -18,6 +18,7 @@ export const Objkt = ({banned}) => {
         artist_address
         artifact_uri
         display_uri
+        creators
         name
         minted_at
         minter_profile {
@@ -117,7 +118,7 @@ return(
               params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${params.id}` 
              : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">   */}
             <div>
-            <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt.artist_address.substr(0, 5) + ". . ." + objkt.artist_address.substr(-5)}</Link>
+            <Link to={`/${objkt.minter_profile?.alias || objkt.artist_address}`}>created by:  {objkt?.minter_profile?.alias || objkt?.artist_address ? objkt.artist_address?.substr(0, 5) + ". . ." + objkt.artist_address?.substr(-5) :  `${objkt.creators[0]}, ${objkt.creators[1]}`}</Link>
             <p>{objkt.price > 0 ?
                  <a onClick={handleCollect()}>{`collect for ${objkt.price/1000000}ꜩ`}</a>
                     : 'sold out'} - <a href={objkt.platform ==='HEN' ? `https://hicetnunc.miami/objkt/${params.id}` 
