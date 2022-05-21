@@ -105,11 +105,6 @@ a{
     transform: scale(1.011);
     transition-duration: .3s;
   }
-  .video{
-      /* height:360px; */
-      width:270px;
-      overflow:hidden;
-  }
   .canvas {
     display: flex; 
     flex-direction: row;
@@ -208,9 +203,7 @@ position:relative;
 
 }
 .column > * {
-  /* padding-left: 10px; gutter size */
   background-clip: padding-box;
-
 }
 
 .center{
