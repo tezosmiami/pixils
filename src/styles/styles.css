@@ -95,7 +95,7 @@ a{
     /* height:360px; */
     width:90%;
     object-fit: contain;
-    margin:5px;
+    margin:8px 8px 8px 8px;
     border: 6px solid var(--text);
     border-radius: 3%;
     padding: 6px;
@@ -105,7 +105,7 @@ a{
     transform: scale(1.011);
     transition-duration: .3s;
   }
-  .canvas {
+    .canvas {
     display: flex; 
     flex-direction: row;
     flex-Wrap: wrap;
