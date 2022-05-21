@@ -126,7 +126,7 @@ export const Search = ({returnSearch, query, banned}) => {
               {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
               <img alt='' className= 'pop' src={`https://gateway.ipfs.io/ipfs/${p.display_uri.slice(7) || p.artifact_uri.slice(7)}`}/> 
                 : p.mime_type.includes('video') ?
-                <ReactPlayer className='pop video' url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+                <ReactPlayer className='pop' url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
                 : ''}
             </Link>
           ))}
