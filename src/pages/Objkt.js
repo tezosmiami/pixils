@@ -83,8 +83,8 @@ return(
     //   params.contract === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? 
     //   `https://versum.xyz/token/versum/${params.id}`
     //   : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">  
-    <a href = {`https://gateway.ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
-    <img alt='' className= 'view' src={`https://gateway.ipfs.io/ipfs/${objkt.display_uri.slice(7)}`}/> 
+    <a href = {`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
+    <img alt='' className= 'view' src={`https://ipfs.io/ipfs/${objkt.display_uri.slice(7)}`}/> 
     </a>
     // </a>
     :
@@ -96,7 +96,7 @@ return(
   //    `https://versum.xyz/token/versum/${objkt.token_id}` 
   //      : `https://objkt.com/asset/${objkt.fa2_address}/${objkt.token_id}`} target="blank"  rel="noopener noreferrer"> 
       <div className='view video'>
-        <a href = {`https://gateway.ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
+        <a href = {`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
          <ReactPlayer url={'https://ipfs.io/ipfs/' + objkt.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
          </a>
       </div>
