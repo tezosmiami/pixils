@@ -105,7 +105,7 @@ export const Search = ({returnSearch, query, banned}) => {
     {loading && search && <div> searching: {search}. . .<p/></div> }
 
     {query && objkts?.length > 0 ? <div className='inline'> {isArtist ? <Link to={`/${search}`}> &nbsp;{search}</Link> : search} </div> :
-     !loading && query && objkts ? <div> empty return. . .<p /> </div> : null} 
+     !loading && query && objkts ? <div> nada. . .<p /> </div> : null} 
         {query && objkts?.length > 0 && objkts.map(p=> (
            <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
           {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?

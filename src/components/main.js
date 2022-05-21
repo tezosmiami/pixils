@@ -53,7 +53,7 @@ export const Main = ({banned}) => {
  
   const { data, error } = useSWR(offset>0 && ['/api/objkts', getObjkts, offset, offsetNew], fetcher, { refreshInterval: 5000 })
 
-  if (error) return <div>nada. . .</div>
+  if (error) return <div>nada. . .<p/></div>
   if (!data) return <div>loading. . .<p/></div>
 
   const final = data?.random.filter((i) => !banned.includes(i.artist_address))

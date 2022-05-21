@@ -61,7 +61,7 @@ export const Profile = ({banned}) => {
   const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
   
-  if (subjkt && !address ) return <div>nada. . .</div>
+  if (subjkt && !address ) return <div>nada. . .<p/></div>
   if (error) return <p>error</p>
   if (!data ) return <div>loading. . .<p/></div>
   
