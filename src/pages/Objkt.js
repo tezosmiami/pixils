@@ -72,7 +72,7 @@ export const Objkt = ({banned}) => {
           setMessage(null);
       }, 3200);
     };
-
+    
 return(
   <>
   
@@ -84,11 +84,11 @@ return(
     //   `https://versum.xyz/token/versum/${params.id}`
     //   : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">  
     <a href = {`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
-    <img alt='' className= 'view' src={`https://gateway.ipfs.io/ipfs/${objkt.display_uri.slice(7)}`}/> 
+    <img alt='' className= 'view' src={`https://ipfs.io/ipfs/${objkt.display_uri.slice(7)}`}/> 
     </a>
     // </a>
     :
-    objkt.length === 1 && objkt?.mime_type?.includes('video') ?  
+   objkt?.mime_type?.includes('video') ?  
   //  <a key={objkt.artifact_uri+objkt.token_id} 
   //     href={objkt.fa2_address === 'KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ?
   //    `https://hicetnunc.miami/objkt/${objkt.token_id}` : 
@@ -97,7 +97,7 @@ return(
   //      : `https://objkt.com/asset/${objkt.fa2_address}/${objkt.token_id}`} target="blank"  rel="noopener noreferrer"> 
       <div className='view'>
         <a href = {`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
-         <ReactPlayer url={'https://ipfs.io/ipfs/' + objkt.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+        <ReactPlayer url={'https://ipfs.io/ipfs/' + objkt.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
          </a>
       </div>
     // </a> 
