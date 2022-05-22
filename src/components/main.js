@@ -78,7 +78,7 @@ export const Main = ({banned}) => {
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
            <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('video') ? 
-            <div className='pop'>
+            <div className='pop video '>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
              </div>
             : ''}
@@ -100,7 +100,7 @@ export const Main = ({banned}) => {
             {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
            <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('') ? 
-            <div className='pop video'>
+            <div className='pop'>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
              </div>
             : ''}
@@ -110,10 +110,11 @@ export const Main = ({banned}) => {
         <div>
           <p></p>
        </div>
-
-       <div>
+          <p/>
+          <div style={{margin: '18px', flexDirection: 'row'}}>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   
+          <p/>
        </div>
      </>
     );

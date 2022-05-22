@@ -15,9 +15,9 @@ const breakpointColumns = {
 };
 
 const getSearch = gql`
-    query querySearch($word: String!){
+    query querySearch($word: String!, $offset: Int!){
       aliases: tokens(where: {editions: {_eq: "1"}, artifact_uri: {_is_null: false}, artist_profile: {alias: {_eq: $word}},
-        mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}) {
+        mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}, offset: $offset ) {
           mime_type
           artifact_uri
           display_uri
@@ -26,7 +26,7 @@ const getSearch = gql`
           artist_address
       }
       tags: tokens(where: {tags: {tag: {_eq: $word}}, artifact_uri: {_is_null: false},
-        mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}) {
+        mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}, offset: $offset) {
           mime_type
           artifact_uri
           display_uri
@@ -42,6 +42,8 @@ export const Search = ({returnSearch, query, banned}) => {
     const [input, setInput] = useState()
     const [loading, setLoading] = useState()
     const [objkts, setObjkts] = useState()
+    const [offset, setOffset] = useState(0);
+    const [pageIndex, setPageIndex] = useState(0)
 
   //   const getSearch = gql`
   //   query querySearch {
@@ -73,7 +75,7 @@ export const Search = ({returnSearch, query, banned}) => {
         if (search && banned) { 
         setObjkts([])
         setLoading(true)  
-        const result = await request(process.env.REACT_APP_TEZTOK_API,  getSearch, {word: search})
+        const result = await request(process.env.REACT_APP_TEZTOK_API,  getSearch, {word: search,offset: offset})
         const aliases = result.aliases.filter((i) => !banned.includes(i.artist_address))
         const tags = result.tags.filter((i) => !banned.includes(i.artist_address))
         const tags_artifacts = new Set(tags.map(({ artifact_uri }) => artifact_uri));
@@ -92,7 +94,7 @@ export const Search = ({returnSearch, query, banned}) => {
         }
         }
         getObjkts();
-    }, [search,banned])
+    }, [search,banned, offset])
     const isArtist = objkts?.every((i) => i.artist_profile?.alias === search)
     // if (search && !loading) return (<div>empty return. . .</div>)
     // if (loading) return 'loading. . .'
@@ -132,6 +134,11 @@ export const Search = ({returnSearch, query, banned}) => {
           ))}
        </Masonry>
         </div>
+         <div style={{flexDirection: 'row'}}>
+          {pageIndex >= 1 && !loading && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-108)}}>Previous  &nbsp;- </button>}
+          {query && objkts?.length > 0 && !loading && <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+108)}}>Next</button>}  
+          {query && objkts?.length > 0 && !loading && <p/>}
+      </div>
        </>
     );
   }
