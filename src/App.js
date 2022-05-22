@@ -7,7 +7,7 @@ import { Objkt } from './pages/Objkt'
 import { LightButton } from './components/light-button';
 import "./styles/styles.css";
 
-const fonts = ['Halo', 'Advantage', 'Faster One']
+const fonts = ['Halo', 'Advantage', 'Faster One', 'Monofett', 'Sonsie One', 'Libre Barcode 39 Text','Monoton']
 
 function App() {
   const  app = useTezosContext();
