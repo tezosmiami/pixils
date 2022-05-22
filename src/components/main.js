@@ -98,7 +98,7 @@ export const Main = ({banned}) => {
         {final && final.map(p=> (
          <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
             {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-           <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
+           <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p.display_uri ? p.display_uri?.slice(7) : p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('') ? 
             <div className='pop'>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
