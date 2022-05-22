@@ -62,7 +62,7 @@ export const Search = ({returnSearch, query, banned}) => {
 
     const handleKey = (e) => {
         if (e.key == 'Enter') { 
-            setSearch(e.target.value)
+            setSearch(e.target.value.toLowerCase())
             setInput('')
         }
      
