@@ -16,7 +16,7 @@ const breakpointColumns = {
 
 const getSearch = gql`
     query querySearch($word: String!, $offset: Int!){
-      aliases: tokens(where: {editions: {_eq: "1"}, artifact_uri: {_is_null: false}, artist_profile: {alias: {_eq: $word}},
+      aliases: tokens(where: {editions: {_eq: "1"}, price: {_gt: 0}, artifact_uri: {_is_null: false}, artist_profile: {alias: {_eq: $word}},
         mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}, offset: $offset ) {
           mime_type
           artifact_uri
