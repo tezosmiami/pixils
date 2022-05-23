@@ -14,12 +14,13 @@ export const Objkt = ({banned}) => {
   const params = useParams();
   const queryObjkt = gql`
     query objkt {
-      tokens(where: {fa2_address: {_eq: "${params.contract}"}, token_id: {_eq: "${params.id}"}}) {
+      tokens(where: {fa2_address: {_eq: "${params.contract}", _neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}, token_id: {_eq: "${params.id}"}}) {
         artist_address
         artifact_uri
         display_uri
         creators
         name
+        symbol
         minted_at
         minter_profile {
           alias
@@ -85,7 +86,7 @@ return(
     //   `https://versum.xyz/token/versum/${params.id}`
     //   : `https://objkt.com/asset/${params.contract}/${params.id}`} target="blank"  rel="noopener noreferrer">  
     <a href = {`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`} target='blank'  rel='noopener noreferrer'>
-    <img alt='' className= 'view' src={`https://ipfs.io/ipfs/${objkt.artifact_uri.slice(7)}`}/> 
+    <img alt='' className= 'view' src={`https://ipfs.io/ipfs/${objkt.platform === '8BIDOU' ? objkt.display_uri.slice(7) : objkt.artifact_uri.slice(7)}`}/> 
     </a>
     // </a>
     :

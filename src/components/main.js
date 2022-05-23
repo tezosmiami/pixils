@@ -23,22 +23,23 @@ const breakpointColumns = {
 // `
 export const getObjkts = gql`
   query objkts ($offset: Int!, $offsetNew: Int!) {
-    random: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offset, limit: 81) {
+    random: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, offset: $offset, limit: 81) {
       mime_type
       artifact_uri
       display_uri
       fa2_address
       token_id
       artist_address
+      thumbnail_uri
     }
 
-    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}}, offset: $offsetNew, order_by: {minted_at: desc}, limit: 27) {
+    recent: tokens(where: {editions: {_eq: "1"}, price: {_is_null: false}, mime_type: {_is_null: false}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, offset: $offsetNew, order_by: {minted_at: desc}, limit: 27) {
       mime_type
       artifact_uri
       display_uri
       fa2_address
       token_id
-      artist_address
+      thumbnail_uri
     }
   }  
    ` 
@@ -76,7 +77,7 @@ export const Main = ({banned}) => {
         {data && data.recent.map(p=> (
            <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-           <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p?.display_uri?.slice(7) || p.artifact_uri.slice(7)}`}/> 
+           <img alt='' className= 'pop' key={p.artifact_uri+p.token_id}  src={`https://ipfs.io/ipfs/${p.display_uri ? p.display_uri?.slice(7) : p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('video') ? 
             <div className='pop video '>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>

@@ -17,7 +17,7 @@ const breakpointColumns = {
 const getSearch = gql`
     query querySearch($word: String!, $offset: Int!){
       aliases: tokens(where: {editions: {_eq: "1"}, price: {_gt: 0}, artifact_uri: {_is_null: false}, artist_profile: {alias: {_eq: $word}},
-        mime_type: {_is_null: false}}, limit: 108, order_by: {minted_at: desc}, offset: $offset ) {
+        mime_type: {_is_null: false}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, limit: 108, order_by: {minted_at: desc}, offset: $offset ) {
           mime_type
           artifact_uri
           display_uri
@@ -26,7 +26,7 @@ const getSearch = gql`
           artist_address
       }
       tags: tokens(where: {tags: {tag: {_eq: $word}}, artifact_uri: {_is_null: false},
-        mime_type: {_is_null: false}, editions: {_eq: "1"}}, limit: 108, order_by: {minted_at: desc}, offset: $offset) {
+        mime_type: {_is_null: false}, editions: {_eq: "1"}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, limit: 108, order_by: {minted_at: desc}, offset: $offset) {
           mime_type
           artifact_uri
           display_uri

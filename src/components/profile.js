@@ -25,7 +25,7 @@ query Subjkt($address: String!) {
 
 export const getObjkts = gql`
 query walletName($address: String) {
-    created: tokens(where: {artist_address: {_eq: $address}, artifact_uri: {_is_null: false}, mime_type: {_is_null: false}, editions: {_eq: "1"}}, order_by: {minted_at: desc}) {
+    created: tokens(where: {artist_address: {_eq: $address}, artifact_uri: {_is_null: false}, mime_type: {_is_null: false}, editions: {_eq: "1"}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, order_by: {minted_at: desc}) {
       artifact_uri
       display_uri
       artist_address
@@ -98,7 +98,7 @@ export const Profile = ({banned}) => {
         {filteredcreated && filteredcreated.map(p=> (
            <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
            {p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ?
-           <img alt='' className= 'pop' src={`https://ipfs.io/ipfs/${p.platform==='8BIDOU' ? p.display_uri.slice(7) : p.artifact_uri.slice(7)}`}/> 
+           <img alt='' className= 'pop' src={`https://ipfs.io/ipfs/${p.display_uri ? p.display_uri?.slice(7) : p.artifact_uri.slice(7)}`}/> 
            : p.mime_type.includes('video') ? 
             <div  className='pop'>
               <ReactPlayer url={'https://ipfs.io/ipfs/' + p?.artifact_uri?.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
