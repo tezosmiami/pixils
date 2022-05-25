@@ -86,8 +86,8 @@ export const LatestMints = () => {
       <>
       <div className='container'>
         {totalmints && totalmints.map(p=> (
-          p.token.mime_type &&
-        //   p.token.eightbid_rgb === null &&
+         p.token.mime_type !== null &&
+          p.token.eightbid_rgb == null &&
           p.token.mime_type.includes('image') && p.token.mime_type !== 'image/svg+xml' ? 
            <a key={p.opid} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.type === 'VERSUM_MINT' ? `https://versum.xyz/token/versum/${p.token_id}` :
