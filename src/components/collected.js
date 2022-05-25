@@ -89,7 +89,7 @@ export const Collected = ({ address, banned }) => {
       <div className='container'>
         {collected && collected.map(p=> (
           p.token.mime_type !== null &&
-          p.token.eightbid_rgb === null &&
+          p.token.eightbid_rgb == null &&
           p.token.mime_type.includes('image') && p.token.mime_type !== 'image/svg+xml' ? 
            <a key={p.token.artifact_uri} href={p.token.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token.token_id}` : 
               p.token.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token.token_id}` 

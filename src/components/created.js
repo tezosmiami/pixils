@@ -79,7 +79,7 @@ export const Created = ({ address, banned }) => {
       <div className='container'>
         {created && created.map(p=> (
           p.mime_type !== null &&
-          p.eightbid_rgb === null &&
+          p.eightbid_rgb == null &&
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
