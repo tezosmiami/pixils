@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { request, gql } from 'graphql-request'
 import useSWR, { useSWRConfig } from 'swr';
+import ReactPlayer from 'react-player'
 
 export const getLatestMints = gql`
     query getLatestMints ($offset: Int!) {
@@ -93,15 +94,19 @@ export const LatestMints = () => {
               p.type === 'OBJKT_MINT_ARTIST' ? `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`:
               p.type === 'FX_MINT' ? `https://fxhash.xyz/gentk/${p.token_id}`
              : '/#'} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.opid}  src={'https://ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.opid}  src={`https://ipfs.io/ipfs/${p.token.display_uri ? p.token.display_uri.slice(7) : p.token.artifact_uri.slice(7)}`}/> 
           </a>
            :
-          // p.token.mime_type !== null &&
-          // p.token.mime_type.includes('video') ?  
-        
-          // <video className='pop video' key={p.opid}  src={'https://cloudflare-ipfs.com/ipfs/' + p.token.artifact_uri.slice(7)} /> 
-        
-          // :
+          p.token.mime_type !== null &&
+          p.token.mime_type.includes('video') ?  
+          <div key= {p.opid}className='pop video'>
+          <a href={p.token.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+          p.token.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
+         : `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`} target="blank"  rel="noopener noreferrer">  
+         <ReactPlayer  url={'https://ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+        </a>
+        </div>
+          :
           p.token.eightbid_rgb ?
              <a key={p.opid} href={`https://ui.8bidou.com/item/?id=${p.token_id}`} target="blank"  rel="noopener noreferrer" > 
                <div className='row'>

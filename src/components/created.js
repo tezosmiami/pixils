@@ -83,9 +83,8 @@ export const Created = ({ address, banned }) => {
           p.mime_type.includes('image') && p.mime_type !== 'image/svg+xml' ? 
            <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
               p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
-
              : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.artifact_uri}  src={`https://ipfs.io/ipfs/${p.display_uri ? p.display_uri.slice(7) : p.artifact_uri?.slice(7)}`}/> 
           </a>
            :
           p.mime_type !== null &&
@@ -95,13 +94,17 @@ export const Created = ({ address, banned }) => {
 
          : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
            <div className='pop video'>
+           <a key={p.artifact_uri} href={p.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token_id}` : 
+              p.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token_id}` 
+             : `https://objkt.com/asset/${p.fa2_address}/${p.token_id}`} target="blank"  rel="noopener noreferrer">  
              <ReactPlayer url={'https://ipfs.io/ipfs/' + p.artifact_uri.slice(7)} width='100%' height='100%' muted={true} playing={true} loop={true}/>
+              </a>
             </div>
             </a>
           :
           p.eightbid_rgb !== null ?
-            //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
-            <a key={p.token_id} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
+  
+            <a key={p.token_id} href={`https://ui.8bidou.com/item/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
                <div className='row'>
           {sliceChunks(p?.eightbid_rgb,6).map((c,i) => {
             return (

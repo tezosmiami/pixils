@@ -77,7 +77,7 @@ export const Collected = ({ address, banned }) => {
   // const owned = data?.alias.length > 0 ? data.alias.concat(data.aliasBidou) : data.pk.concat(data.pkBidou);
 
   const collected = data?.collected.filter((i) => !banned.includes(i.token.artist_address))
-
+  if (collected.length === 0) return <p>nada. . .</p>
 
 //   final?.length > 0 && final.sort(function (a, b) {
 //     return b?.token.minted_at.getTime() - a?.token.minted_at.getTime();
@@ -95,7 +95,7 @@ export const Collected = ({ address, banned }) => {
               p.token.fa2_address === 'KT1LjmAdYQCLBjwv4S2oFkEzyHVkomAf5MrW' ? `https://versum.xyz/token/versum/${p.token.token_id}` 
 
              : `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`} target="blank"  rel="noopener noreferrer">  
-          <img alt='' className= 'pop' key={p.token.artifact_uri}  src={'https://gateway.ipfs.io/ipfs/' + p.token.artifact_uri.slice(7)}/> 
+          <img alt='' className= 'pop' key={p.token.artifact_uri}  src={`https://ipfs.io/ipfs/${p.token.display_uri ? p.token.display_uri.slice(7) : p.token.artifact_uri.slice(7)}`}/> 
           </a>
            :
           p.token.mime_type !== null &&
@@ -111,7 +111,7 @@ export const Collected = ({ address, banned }) => {
           :
           p.token.eightbid_rgb !== null ?
             //  <a key={p.opid} href={`https://www.8bidou.com/listing/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
-            <a key={p.token.token_id} href={`https://www.8bidou.com`} target="blank"  rel="noopener noreferrer">
+            <a key={p.token.token_id} href={`https://ui.8bidou.com/item/?id=${p.token.token_id}`} target="blank"  rel="noopener noreferrer">
                <div className='row'>
           {sliceChunks(p?.token.eightbid_rgb,6).map((c,i) => {
             return (
