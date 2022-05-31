@@ -62,8 +62,8 @@ export const Objkt = ({banned}) => {
       !app.address && setMessage('please sync. . .') 
       if(app.address) try {
           setMessage('ready wallet. . .');
-          const isCollected = await app.collect({swap_id: objkt.listings[objkt.listings.length-1].swap_id || objkt.listings[0].ask_id, price: objkt.price,
-             contract: objkt.listings[objkt.listings.length-1].contract_address, platform: objkt.listings[0].type.includes('OBJKT') ? 'OBJKT' : objkt.platform});
+          const isCollected = await app.collect({swap_id: objkt.listings[objkt.listings.length-1].swap_id || objkt.listings[objkt.listings.length-1].ask_id, price: objkt.price,
+             contract: objkt.listings[objkt.listings.length-1].contract_address, platform: objkt.listings[objkt.listings.length-1].type.includes('OBJKT') ? 'OBJKT' : objkt.platform});
           setMessage(isCollected ? 'congratulations - you got it!' : 'transaction denied. . .');
         
       } catch(e) {
