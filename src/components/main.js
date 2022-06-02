@@ -112,7 +112,7 @@ export const Main = ({banned}) => {
           <p></p>
        </div>
           <p/>
-          <div style={{margin: '18px', flexDirection: 'row'}}>
+          <div style={{justifyContent: 'center', margin: '18px', flexDirection: 'row'}}>
           {pageIndex >= 1 && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-99); setOffsetNew(offsetNew-27); mutate('/api/objkts')}}>Previous  &nbsp;- </button>}
           <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+99); setOffsetNew(offsetNew+27); mutate('/api/objkts')}}>Next</button>   
           <p/>
