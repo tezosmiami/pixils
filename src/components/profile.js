@@ -13,16 +13,22 @@ const breakpointColumns = {
   610: 1
 };
 
-export const getSubjkt = gql`
-query Subjkt($address: String!) {
-  tzprofiles(where: {alias: {_ilike: $address}}) {
+export const getAddressbyName = gql`
+query alias($name: String!) {
+  tzprofiles(where: {alias: {_eq: $name}) {
       account
       twitter
     }
   }
-  
 `
 
+export const getAddressbySubjkt = `
+query subjkt($address: String!) {
+  hic_et_nunc_holder(where: { name: {_eq: $address}}) {
+    address
+  }
+}
+`
 export const getObjkts = gql`
 query walletName($address: String) {
     created: tokens(where: {artist_address: {_eq: $address}, artifact_uri: {_is_null: false}, mime_type: {_is_null: false}, editions: {_eq: "1"}, fa2_address: {_neq: "KT1EpGgjQs73QfFJs9z7m1Mxm5MTnpC2tqse"}}, order_by: {minted_at: desc}) {
@@ -54,6 +60,7 @@ query walletName($address: String) {
 ` 
    
 const fetcher = (key, query, address) => request(process.env.REACT_APP_TEZTOK_API, query, {address})
+const hicFetcher = (key, query, address) => request(process.env.REACT_APP_HICDEX_API, query, {address})
 
 
 export const Profile = ({banned}) => {
@@ -63,12 +70,11 @@ export const Profile = ({banned}) => {
   const { account } = useParams();
 
 
-  const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
-
-  const address = account?.length === 36 ? account : subjkt?.tzprofiles[0]?.account || null
+  const { data: alias, error: aliasError } = useSWR(account.length !== 36 ? ['/api/name', getAddressbyName, account] : null, fetcher)
+  const { data: subjkt, error: subjktError } = useSWR(account.length !== 36 ? ['/api/subjkt', getAddressbySubjkt, account] : null, hicFetcher)
+  const address = account?.length === 36 ? account : alias?.tzprofiles[0]?.account || subjkt?.hic_et_nunc_holder[0]?.address || null
   const { data, error } = useSWR(address?.length === 36 ? ['/api/profile', getObjkts, address] : null, fetcher, { refreshInterval: 15000 })
-  
-  if (subjkt && !address ) return <div>nada. . .<p/></div>
+  if (subjkt && alias && !address ) return <div>nada. . .<p/></div>
   if (error) return <p>error</p>
   if (!data ) return <div>loading. . .<p/></div>
   
@@ -81,11 +87,10 @@ export const Profile = ({banned}) => {
   //   totalpixils?.length > 0 && totalpixils.sort(function (a, b) {
 //     return b.opid - a.opid;
 //   });
- filteredcreated && console.log(filteredcreated[0].minter_profile?.logo)
     return (
       <>
       <p  style={{fontSize:'25px'}}>
-        <a href={subjkt?.tzprofiles[0]?.twitter ? `https://twitter.com/${subjkt.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
+        <a href={alias?.tzprofiles[0]?.twitter ? `https://twitter.com/${alias.tzprofiles[0].twitter}`: null} target="blank"  rel="noopener noreferrer">
         {account?.length===36 ? address.substr(0, 4) + "..." + address.substr(-4) : account}
       </a></p>
       {/* <img className='avatar' src={filteredcreated ? filteredcreated[0].minter_profile?.logo : null}/> */}
@@ -93,7 +98,7 @@ export const Profile = ({banned}) => {
       <div className='container'>
       <Masonry
         breakpointCols={breakpointColumns}
-        className='grid'
+        className={filteredcreated.length == 1 ? '' : 'grid'}
          columnClassName='column'>
         {filteredcreated && filteredcreated.map(p=> (
            <Link className='center' key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
@@ -117,7 +122,7 @@ export const Profile = ({banned}) => {
        <div className='container'>
        <Masonry
         breakpointCols={breakpointColumns}
-        className='grid'
+        className={filteredcollected.length == 1 ? '' : 'grid'}
          columnClassName='column'>
         {filteredcollected && filteredcollected.map(p=> (
         <Link  key={p.artifact_uri+p.token_id} to={`/${p.fa2_address}/${p.token_id}`}>
