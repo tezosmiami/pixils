@@ -4,7 +4,6 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { parse } from "graphql";
 import { Objkt } from "../pages/Objkt";
 
-const hicdex ='https://hdapi.teztools.io/v1/graphql'
 
 const querySubjkt = `
 query Subjkt($address: String!) {
@@ -15,7 +14,7 @@ query Subjkt($address: String!) {
 `
 
 async function fetchGraphQL(queryObjkts, name, variables) {
-  let result = await fetch(hicdex, {
+  let result = await fetch(process.env.REACT_APP_HICDEX_API, {
     method: 'POST',
     body: JSON.stringify({
       query: queryObjkts,
