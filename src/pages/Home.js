@@ -21,12 +21,12 @@ export const Home = () => {
   }, [])
     return (
       <>
-      {!searchParams.get('search') && <a>{!toggled ? 'Sales' : 'Mints'}</a>}
+      {!searchParams.get('search') && <a>{!toggled ? 'Mints' : 'Sales'}</a>}
       {!searchParams.get('search') &&<ToggleSwitch
         isToggled={toggled}
         handleToggle={() => setToggled(!toggled)}/>}
        <Search returnSearch={setSearchData} query={searchParams.get('search')} banned={banned}/>
-       {!toggled && !searchParams.get('search') ? <LatestSales /> : !searchParams.get('search') ? <LatestMints/> : null}
+       {!toggled && !searchParams.get('search') ? <LatestMints /> : !searchParams.get('search') ? <LatestSales/> : null}
  
       </>
     );
