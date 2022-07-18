@@ -72,7 +72,7 @@ export const TezosContextProvider = ({ children }) => {
     }, [tezos]);
   
   async function logIn() {
-    app.currentUser && await app.currentUser?.logOut();
+    app.current && await app.current?.logOut();
     await wallet.client.clearActiveAccount();
     await wallet.client.requestPermissions({
       network: {

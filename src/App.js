@@ -1,5 +1,5 @@
 import React from 'react'
-import { useUserContext } from "./context/tezos-context";
+import { useTezosContext } from "./context/tezos-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
 import { Gallery } from './pages/Gallery'
@@ -8,21 +8,21 @@ import "./styles.css";
 
 function App() {
 
-  const  app = useUserContext();
+  const  app = useTezosContext();
  
   return(
     <>
     <header>
     <Link className='purple' to="/">Pixils</Link>
-    <a> 
+    <p>
     {app.address && <Link to={`/${app.name || app.address}`}>
-        {app.name || app.address.substr(0, 4) + "..." + app.address.substr(-4)}<a className='purple'> /</a>
+        {app.name || app.address.substr(0, 4) + "..." + app.address.substr(-4)}
       </Link>}
-      
+      {app.activeAccount && <a className='purple'> /</a>}
       <button onClick={() => !app.activeAccount ? app.logIn() : app.logOut()}> 
-       {!app.activeAccount ? "sync" : "unsync"}
+       {!app.activeAccount ? "sync" : "unsync"} 
       </button>
-    </a>
+      </p>
     </header>     
     
      <div>

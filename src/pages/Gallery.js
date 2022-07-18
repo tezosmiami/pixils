@@ -25,7 +25,7 @@ export const Gallery = () => {
   const { data: subjkt } = useSWR(account.length !== 36 ? ['/api/name', getSubjkt, account] : null, fetcher)
   useEffect(() => {
     const getBanned = async () => {
-    const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
+    const result = await axios.get('https://raw.githubusercontent.com/teia-community/teia-report/main/restricted.json') ;
     setBanned(result.data)
   }
     getBanned();
