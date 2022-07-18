@@ -13,15 +13,16 @@ function App() {
   return(
     <>
     <header>
+    <Link className='purple' to="/">Pixils</Link>
+    <a> 
     {app.address && <Link to={`/${app.name || app.address}`}>
-        {app.name || app.address.substr(0, 4) + "..." + app.address.substr(-4)}
+        {app.name || app.address.substr(0, 4) + "..." + app.address.substr(-4)}<a className='purple'> /</a>
       </Link>}
-      <Link className='purple' to="/">Pixils</Link>
       
       <button onClick={() => !app.activeAccount ? app.logIn() : app.logOut()}> 
-        {!app.activeAccount ? "sync" : "unsync"}
+       {!app.activeAccount ? "sync" : "unsync"}
       </button>
-
+    </a>
     </header>     
     
      <div>

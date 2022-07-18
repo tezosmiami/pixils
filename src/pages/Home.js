@@ -21,7 +21,7 @@ export const Home = () => {
   }, [])
     return (
       <>
-      {!searchParams.get('search') && <a style={{marginLeft:'21px'}}>{!toggled ? 'Sales' : 'Mints'}</a>}
+      {!searchParams.get('search') && <a>{!toggled ? 'Sales' : 'Mints'}</a>}
       {!searchParams.get('search') &&<ToggleSwitch
         isToggled={toggled}
         handleToggle={() => setToggled(!toggled)}/>}
