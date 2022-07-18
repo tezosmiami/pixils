@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap);
+
 :root {
  --background: #f2ff7a;
  --text: #ff5858;
@@ -97,3 +99,15 @@ a{
  .icon{
      color: var(--text);
  }
+ .searchbar{
+    border-radius: 1%;
+    height:23px;
+    width: 180px; 
+    font-family: 'Press Start 2P';
+    font-size:16px;
+    color: var(--background);
+    background-color: var(--text);
+    margin-bottom: 27px;
+    /* margin-left: 9px; */
+  }
+  

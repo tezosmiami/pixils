@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext} from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
-const hicdex ='https://hdapi.teztools.io/v1/graphql'
+const hicdex ='https://api.hicdex.com/v1/graphql'
 
 const querySubjkt = `
 query Subjkt($address: String!) {
