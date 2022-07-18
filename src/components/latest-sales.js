@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player'
 
 export const getLatestSales = gql`
   query getSales ($offset: Int!, $offsetBidou: Int!) {
-    objkts: events(where: {implements: {_eq: "SALE"}, token: {tags: {tag: {_ilike: "%pixel%"}, token: {metadata_status: {_eq: "processed"}}}}}, order_by: {opid: desc}, limit: 99, offset: $offset) {
+    objkts: events(where: {type: {_nlike: "%FX%"}, implements: {_eq: "SALE"}, token: {tags: {tag: {_ilike: "%pixel%"}, token: {metadata_status: {_eq: "processed"}}}}}, order_by: {opid: desc}, limit: 99, offset: $offset) {
       type
       timestamp
       opid
@@ -85,8 +85,7 @@ export const LatestSales = () => {
           p.token.mime_type.includes('image') && p.token.mime_type !== 'image/svg+xml' ? 
            <a key={p.opid} href={p.token.fa2_address ==='KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' ? `https://hicetnunc.miami/objkt/${p.token.token_id}` : 
               p.type === 'VERSUM_COLLECT_SWAP' ? `https://versum.xyz/token/versum/${p.token.token_id}` :
-              p.type === 'OBJKT_FULFILL_ASK_V2' ? `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`:
-              p.type === 'FX_COLLECT' ? `https://fxhash.xyz/gentk/${p.token.token_id}`
+              p.type === 'OBJKT_FULFILL_ASK_V2' ? `https://objkt.com/asset/${p.token.fa2_address}/${p.token.token_id}`
              : '/#'} target="blank"  rel="noopener noreferrer">  
           <img alt='' className= 'pop' key={p.opid}  src={`https://ipfs.io/ipfs/${p.token.display_uri ? p.token.display_uri.slice(7) : p.token.artifact_uri.slice(7)}`}/> 
           </a>

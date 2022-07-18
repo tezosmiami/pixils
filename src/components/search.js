@@ -24,7 +24,7 @@ export const Search = ({returnSearch, query, banned}) => {
 
     const getSearch = gql`
     query querySearch {
-      tokens(where: {_or: [{tags: {tag: {_eq: ${search}}}}, {artist_profile: {alias: {_eq: ${search}}}}], tags: {tag: {_ilike: "%pixel%"}}}, limit: 108, order_by: {minted_at: desc}, offset: ${offset}) {
+      tokens(where: {_or: [{tags: {tag: {_eq: ${search}}}}, {artist_profile: {alias: {_eq: ${search}}}}], tags: {tag: {_ilike: "%pixel%"}}}, limit: 188, order_by: {minted_at: desc}, offset: ${offset}) {
             mime_type
             artifact_uri
             fa2_address
@@ -123,9 +123,9 @@ export const Search = ({returnSearch, query, banned}) => {
    
        </div>
        <div style={{justifyContent: 'center', margin: '18px', flexDirection: 'row'}}>
-          {pageIndex >= 1 && !loading && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-108)}}>Previous  &nbsp;- </button>}
-          {query && objkts?.length > 100 && !loading && <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+108)}}>Next</button>}  
-          {query && objkts?.length > 100 && !loading && <p/>}
+          {pageIndex >= 1 && !loading && <button onClick={() => {setPageIndex(pageIndex - 1); setOffset(offset-180)}}>Previous  &nbsp;- </button>}
+          {query && objkts?.length > 160 && !loading && <button onClick={() => {setPageIndex(pageIndex + 1); setOffset(offset+180)}}>Next</button>}  
+          {query && objkts?.length > 160 && !loading && <p/>}
         </div>
        </>
     );

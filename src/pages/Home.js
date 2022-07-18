@@ -21,10 +21,10 @@ export const Home = () => {
   }, [])
     return (
       <>
-      <a style={{marginLeft:'21px'}}>{!toggled ? 'Sales' : 'Mints'}</a>
-      <ToggleSwitch
+      {!searchParams.get('search') && <a style={{marginLeft:'21px'}}>{!toggled ? 'Sales' : 'Mints'}</a>}
+      {!searchParams.get('search') &&<ToggleSwitch
         isToggled={toggled}
-        handleToggle={() => setToggled(!toggled)}/>
+        handleToggle={() => setToggled(!toggled)}/>}
        <Search returnSearch={setSearchData} query={searchParams.get('search')} banned={banned}/>
        {!toggled && !searchParams.get('search') ? <LatestSales /> : !searchParams.get('search') ? <LatestMints/> : null}
  
