@@ -1,5 +1,5 @@
 import React from 'react'
-import { useUserContext } from "./context/user-context";
+import { useUserContext } from "./context/tezos-context";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home } from './pages/Home'
 import { Gallery } from './pages/Gallery'

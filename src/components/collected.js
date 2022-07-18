@@ -58,7 +58,7 @@ export const Collected = ({ address, banned }) => {
 
 //   useEffect(() => {
 //     const getBanned = async () => {
-//     const result = await axios.get('https://raw.githubusercontent.com/hicetnunc2000/hicetnunc-reports/main/filters/w.json') ;
+//     const result = await axios.get('https://https://raw.githubusercontent.com/teia-community/teia-report/main/restricted.json') ;
 //     setBanned(result.data)
 //   }
 //     getBanned();
